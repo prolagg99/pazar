@@ -2,6 +2,7 @@
 const fontRegular = 'Regular';
 const fontMeduim = 'Medium';
 const fontBold = 'Bold';
+const fontLight = 'Light';
 
 /* font sizes*/
 const textSizeSmall = 12.0;
