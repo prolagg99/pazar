@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pazar/screen/home.dart';
-import 'package:pazar/screen/test.dart';
 
 void main() async {
   runApp(const Pazar());
@@ -14,9 +13,8 @@ class Pazar extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/': (context) => const Test(),
+        '/': (context) => const Home(),
         Home.tag: (context) => const Home(),
-        Test.tag: (context) => const Test(),
       },
     );
   }

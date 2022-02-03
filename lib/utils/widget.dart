@@ -12,6 +12,51 @@ class MyBehavior extends ScrollBehavior {
   }
 }
 
+Widget appBarTitle() {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+    child: Row(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              const Icon(
+                Icons.shopping_basket_outlined,
+                color: colorAccentGreen,
+                size: 20.0,
+              ),
+              const SizedBox(width: 4),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: text(
+                    '0 pts', colorAccentGreen, fontRegular, textSizeMedium),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Align(
+              alignment: Alignment.center,
+              child: text('ILii Ne', '', fontBold, textSizeSmall)),
+        ),
+        const Expanded(
+          child: SizedBox(
+            height: 35,
+            width: 35,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: CircleAvatar(
+                backgroundColor: colorAccentGreen,
+                child: Text('IL'),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 Widget text(text, textColor, fontFamily, fontSize
     // {
     // var fontSize = textSizeMedium,
@@ -31,6 +76,41 @@ Widget text(text, textColor, fontFamily, fontSize
         // height: 1.5,
         // letterSpacing: latterSpacing
       ));
+}
+
+ListView restaurantList(mRestaurants, lastItem) {
+  return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: mRestaurants.length,
+      itemBuilder: (context, index) {
+        return restaurantCards(context, mRestaurants[index], lastItem);
+      });
+}
+
+ListView dishesList(mDishes) {
+  return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: mDishes.length,
+      itemBuilder: (context, index) {
+        return listCards(context, mDishes[index]);
+      });
+}
+
+Widget textCard(context, title, subtitle) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.10,
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              text(title, '', fontBold, textSizeMedium),
+              const SizedBox(height: 4),
+              text(subtitle, Colors.grey[600], fontLight, textSizeSMedium),
+            ])),
+  );
 }
 
 Widget restaurantCards(context, model, last) {
