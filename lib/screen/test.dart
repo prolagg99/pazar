@@ -15,18 +15,21 @@ class Test extends StatefulWidget {
 }
 
 class _TestState extends State<Test> {
+  final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollViewController = ScrollController();
   bool _showAppbar = true;
   bool isScrollingDown = false;
 
-  List<Restaurants> mListing = [];
-  late Restaurants resturants;
+  List<Restaurants> mRestaurants = [];
+  late Restaurants lastItem;
+  List<Dishes> mDishes = [];
 
   @override
   void initState() {
     super.initState();
-    mListing = getRestaurantImages();
-    resturants = mListing[0];
+    mRestaurants = getRestaurantImages();
+    lastItem = mRestaurants[mRestaurants.length - 1];
+    mDishes = getDishes();
     // _scrollViewController = ScrollController();
     _scrollViewController.addListener(() {
       if (_scrollViewController.position.userScrollDirection ==
@@ -124,7 +127,7 @@ class _TestState extends State<Test> {
                                 width: 300,
                                 child: TextField(
                                   cursorColor: colorAccentGreen,
-                                  // controller: _textEditingController,
+                                  controller: _textEditingController,
                                   onChanged: (value) {
                                     setState(() {
                                       // glossarListOnSearch = glossarList
@@ -158,143 +161,101 @@ class _TestState extends State<Test> {
                                       hintStyle: TextStyle(color: Colors.grey)),
                                 ),
                               ),
-                              // SizedBox(height: 2)
                             ],
                           ),
                         ),
                       )
                     ]))),
             Expanded(
-              child: SingleChildScrollView(
-                controller: _scrollViewController,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      //add your screen content here
-                      Flexible(
-                        // flex: 2,
-                        child: Container(
-                          height: MediaQuery.of(context).size.width * 0.30,
-                          color: Colors.red,
+              child: ScrollConfiguration(
+                behavior: MyBehavior(),
+                child: SingleChildScrollView(
+                  controller: _scrollViewController,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Flexible(
+                          child: Container(
+                            height: MediaQuery.of(context).size.height * 0.14,
+                            color: Colors.red,
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        // flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.10,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      text('Today new Available', '', fontBold,
+                                          textSizeMedium),
+                                      const SizedBox(height: 4),
+                                      text(
+                                          'Best of the today items list',
+                                          Colors.grey[600],
+                                          fontLight,
+                                          textSizeSMedium),
+                                    ])),
+                          ),
+                        ),
+                        Flexible(
                           child: SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.19,
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    text('Today new Available', '', fontBold,
-                                        textSizeMedium),
-                                    const SizedBox(height: 4),
-                                    text(
-                                        'Best of the today items list',
-                                        Colors.grey[600],
-                                        fontLight,
-                                        textSizeSMedium),
-                                  ])),
+                            height: MediaQuery.of(context).size.height * 0.20,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: mRestaurants.length,
+                                itemBuilder: (context, index) {
+                                  return restaurantCards(
+                                      context, mRestaurants[index], lastItem);
+                                  // const SizedBox(height: 20),
+                                }),
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        // flex: 3,
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.width * 0.44,
-                          // color: Colors.blue,
-                          child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: mListing.length,
-                              itemBuilder: (context, index) {
-                                return restaurantCards(context, resturants);
-                                // const SizedBox(height: 20),
-                              }
-                              // children: <Widget>[
-
-                              //   const SizedBox(width: 10),
-                              //   Container(
-                              //     width: 132,
-                              //     color: Colors.purple[500],
-                              //     child: const Center(
-                              //         child: Text(
-                              //       'Item 2',
-                              //       style: TextStyle(
-                              //           fontSize: 18, color: Colors.white),
-                              //     )),
-                              //   ),
-                              //   const SizedBox(width: 10),
-                              //   Container(
-                              //     width: 132,
-                              //     color: Colors.purple[400],
-                              //     child: const Center(
-                              //         child: Text(
-                              //       'Item 3',
-                              //       style: TextStyle(
-                              //           fontSize: 18, color: Colors.white),
-                              //     )),
-                              //   ),
-                              //   const SizedBox(width: 10),
-                              //   Container(
-                              //     width: 132,
-                              //     color: Colors.purple[300],
-                              //     child: const Center(
-                              //         child: Text(
-                              //       'Item 4',
-                              //       style: TextStyle(
-                              //           fontSize: 18, color: Colors.white),
-                              //     )),
-                              //   ),
-                              // ],
-                              ),
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.10,
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      text('All Items', Colors.black, fontBold,
+                                          textSizeMedium),
+                                      const SizedBox(height: 4),
+                                      text(
+                                          'All Items with best items list',
+                                          Colors.grey[600],
+                                          fontLight,
+                                          textSizeSMedium),
+                                    ])),
+                          ),
                         ),
-                      ),
-                      Flexible(
-                        // flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                        Flexible(
                           child: SizedBox(
-                              height: MediaQuery.of(context).size.width * 0.19,
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    text('All Items', Colors.black, fontBold,
-                                        textSizeMedium),
-                                    const SizedBox(height: 4),
-                                    text(
-                                        'All Items with best items list',
-                                        Colors.grey[600],
-                                        fontLight,
-                                        textSizeSMedium),
-                                  ])),
-                        ),
-                      ),
-                      listCards(context),
-                      const SizedBox(height: 20),
-                      listCards(context),
+                              // height: MediaQuery.of(context).size.height,
+                              child: ListView.builder(
+                                  shrinkWrap: true,
 
-                      const SizedBox(height: 20),
-                      listCards(context),
-
-                      const SizedBox(height: 20),
-                      listCards(context), listCards(context),
-
-                      const SizedBox(height: 20),
-                      listCards(context),
-                      listCards(context), listCards(context),
-                      listCards(context),
-                      listCards(context), listCards(context),
-                      listCards(context),
-                      listCards(context), listCards(context),
-                      listCards(context),
-                      listCards(context), listCards(context),
-                      listCards(context),
-                    ],
+                                  // scrollDirection: Axis.vertical,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: mDishes.length,
+                                  itemBuilder: (context, index) {
+                                    return listCards(context, mDishes[index]);
+                                    // const SizedBox(height: 20),
+                                  })),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

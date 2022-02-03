@@ -318,21 +318,23 @@ class BodyHome extends StatelessWidget {
             Expanded(
               flex: 4,
               child: SizedBox(
-                  child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemCount: 2,
-                      itemBuilder: (context, indx) {
-                        return listCards(context);
-                        // const SizedBox(height: 20),
-                      }
-                      // children: [
-                      //   listCards(context),
-                      //   const SizedBox(height: 20),
-                      //   listCards(context),
-                      //   const SizedBox(height: 20),
-                      //   listCards(context),
-                      // ],
-                      )),
+                  // child:
+                  // ListView.builder(
+                  //     scrollDirection: Axis.vertical,
+                  //     itemCount: 2,
+                  //     itemBuilder: (context, indx) {
+                  //       return listCards(context, );
+                  //       // const SizedBox(height: 20),
+                  //     }
+                  // children: [
+                  //   listCards(context),
+                  //   const SizedBox(height: 20),
+                  //   listCards(context),
+                  //   const SizedBox(height: 20),
+                  //   listCards(context),
+                  // ],
+                  // )
+                  ),
             ),
           ],
         ),
