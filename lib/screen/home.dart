@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   List<Restaurants> mRestaurants = [];
   List<Dishes> dishesListOnSearch = [];
   List<Dishes> mDishes = [];
+  List<Slides> mSlides = [];
   late Restaurants lastItem;
 
   @override
@@ -31,6 +32,7 @@ class _HomeState extends State<Home> {
     mRestaurants = getRestaurantImages();
     lastItem = mRestaurants[mRestaurants.length - 1];
     mDishes = getDishes();
+    mSlides = getSlides();
 
     _scrollViewController.addListener(() {
       if (_scrollViewController.position.userScrollDirection ==
@@ -84,7 +86,7 @@ class _HomeState extends State<Home> {
                           children: [
                             SizedBox(
                               height: 40,
-                              width: 300,
+                              width: 308,
                               child: TextField(
                                 cursorColor: colorAccentGreen,
                                 controller: _textEditingController,
@@ -161,11 +163,7 @@ class _HomeState extends State<Home> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Flexible(
-                                    child: Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.14,
-                                        color: Colors.red),
+                                    child: carouselSliderContainer(mSlides),
                                   ),
                                   Flexible(
                                     child: textCard(

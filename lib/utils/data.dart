@@ -37,3 +37,11 @@ List<Dishes> getDishes() {
       image: img_burger, name: 'Burger', arabic: 'تشيز برقر', price: '300'));
   return data;
 }
+
+List<Slides> getSlides() {
+  List<Slides> data = [];
+  data.add(Slides(image: img_slide1));
+  data.add(Slides(image: img_slide2));
+  data.add(Slides(image: img_slide3));
+  return data;
+}

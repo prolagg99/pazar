@@ -12,3 +12,8 @@ class Dishes {
   var price;
   Dishes({this.image, this.name, this.arabic, this.price});
 }
+
+class Slides {
+  var image;
+  Slides({this.image});
+}

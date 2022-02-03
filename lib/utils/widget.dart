@@ -1,5 +1,6 @@
 // ignore_for_file: use_key_in_widget_constructors
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -76,6 +77,37 @@ Widget text(text, textColor, fontFamily, fontSize
         // height: 1.5,
         // letterSpacing: latterSpacing
       ));
+}
+
+Widget carouselSliderContainer(mSlides) {
+  return Container(
+      // color: Colors.red,
+      child: CarouselSlider.builder(
+    itemCount: mSlides.length,
+    options: CarouselOptions(
+      viewportFraction: 1,
+      autoPlay: true,
+      aspectRatio: 3.2,
+      // enlargeCenterPage: true,
+    ),
+    itemBuilder: (context, index, realIdx) {
+      return slideContainer(context, mSlides[index]);
+    },
+  ));
+}
+
+Widget slideContainer(context, model) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Image.asset(
+        model.image,
+        // height: 20,
+        fit: BoxFit.cover,
+      ),
+    ),
+  );
 }
 
 ListView restaurantList(mRestaurants, lastItem) {

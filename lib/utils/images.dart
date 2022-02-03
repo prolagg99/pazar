@@ -11,3 +11,8 @@ const img_pizza = "images/pizza.jpg";
 const img_chami = "images/chami.jpg";
 const img_chatain = "images/chatain.jpg";
 const img_kababji = "images/kababji.jpg";
+
+// slides images
+const img_slide1 = "images/slide1.jpg";
+const img_slide2 = "images/slide2.jpg";
+const img_slide3 = "images/slide3.jpg";
