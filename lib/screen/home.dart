@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pazar/model/model.dart';
+import 'package:pazar/screen/restaurant_dishes.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/data.dart';
+import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 
 class Home extends StatefulWidget {
@@ -129,24 +131,9 @@ class _HomeState extends State<Home> {
                     )
                   ])),
             ),
+            // first case when no item found in dishes list ! ------------------
             _textEditingController.text.isNotEmpty && dishesListOnSearch.isEmpty
-                ? Column(
-                    children: const [
-                      Align(
-                        alignment: Alignment.center,
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 50, 0, 0),
-                          child: Text(
-                            'No results',
-                            style: TextStyle(
-                                fontFamily: 'Avenir',
-                                fontSize: 22,
-                                color: Color(0xff848484)),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                ? itemNotFound(context)
                 : _textEditingController.text.isNotEmpty &&
                         dishesListOnSearch.isNotEmpty
                     ? dishesList(dishesListOnSearch)
@@ -157,7 +144,7 @@ class _HomeState extends State<Home> {
                             controller: _scrollViewController,
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,8 +163,14 @@ class _HomeState extends State<Home> {
                                         height:
                                             MediaQuery.of(context).size.height *
                                                 0.20,
-                                        child: restaurantList(
-                                            mRestaurants, lastItem)),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            launchScreen(
+                                                context, RestaurantDishes.tag);
+                                          },
+                                          child: restaurantList(
+                                              mRestaurants, lastItem),
+                                        )),
                                   ),
                                   Flexible(
                                     child: textCard(context, 'All Items',

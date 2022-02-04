@@ -1,9 +1,14 @@
 // ignore_for_file: use_key_in_widget_constructors
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:pazar/screen/item_details.dart';
+import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/utils/extension.dart';
+import 'package:pazar/utils/images.dart';
 
 class MyBehavior extends ScrollBehavior {
   @override
@@ -11,6 +16,15 @@ class MyBehavior extends ScrollBehavior {
       BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
+}
+
+SvgPicture svgPicture(icon, color, size) {
+  return SvgPicture.asset(
+    icon,
+    height: size,
+    width: size,
+    color: color,
+  );
 }
 
 Widget appBarTitle() {
@@ -21,10 +35,10 @@ Widget appBarTitle() {
         Expanded(
           child: Row(
             children: [
-              const Icon(
-                Icons.shopping_basket_outlined,
-                color: colorAccentGreen,
-                size: 20.0,
+              Image.asset(
+                ic_money,
+                height: 22,
+                width: 22,
               ),
               const SizedBox(width: 4),
               Align(
@@ -80,9 +94,7 @@ Widget text(text, textColor, fontFamily, fontSize
 }
 
 Widget carouselSliderContainer(mSlides) {
-  return Container(
-      // color: Colors.red,
-      child: CarouselSlider.builder(
+  return CarouselSlider.builder(
     itemCount: mSlides.length,
     options: CarouselOptions(
       viewportFraction: 1,
@@ -93,14 +105,14 @@ Widget carouselSliderContainer(mSlides) {
     itemBuilder: (context, index, realIdx) {
       return slideContainer(context, mSlides[index]);
     },
-  ));
+  );
 }
 
 Widget slideContainer(context, model) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(16),
       child: Image.asset(
         model.image,
         // height: 20,
@@ -115,7 +127,7 @@ ListView restaurantList(mRestaurants, lastItem) {
       scrollDirection: Axis.horizontal,
       itemCount: mRestaurants.length,
       itemBuilder: (context, index) {
-        return restaurantCards(context, mRestaurants[index], lastItem);
+        return restaurantCard(context, mRestaurants[index], lastItem);
       });
 }
 
@@ -125,7 +137,7 @@ ListView dishesList(mDishes) {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: mDishes.length,
       itemBuilder: (context, index) {
-        return listCards(context, mDishes[index]);
+        return itemCard(context, mDishes[index]);
       });
 }
 
@@ -145,7 +157,7 @@ Widget textCard(context, title, subtitle) {
   );
 }
 
-Widget restaurantCards(context, model, last) {
+Widget restaurantCard(context, model, last) {
   return Padding(
     padding: model != last
         ? const EdgeInsets.only(right: 10)
@@ -163,94 +175,126 @@ Widget restaurantCards(context, model, last) {
   );
 }
 
-Widget listCards(context, model) {
+Widget itemCard(context, model) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 20),
-    child: Container(
-        height: 94,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          child: Row(
-            children: [
-              Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                      child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
-                    child: Container(
-                      // color: Colors.red,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(10)),
-                          image: DecorationImage(
-                            image: AssetImage(model.image),
-                            fit: BoxFit.fill,
-                          )),
-                    ),
-                  ))),
-              Expanded(
-                  flex: 4,
-                  child: Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(model.name,
-                                  style: const TextStyle(
-                                    fontFamily: fontBold,
-                                    fontSize: textSizeMedium,
-                                  )),
-                              // const SizedBox(height: 4),
-                              Text(model.arabic,
-                                  style: TextStyle(
-                                    color: Colors.grey[600],
-                                    fontFamily: fontLight,
-                                    fontSize: textSizeSMedium,
-                                  )),
-                              Text(model.price,
-                                  style: const TextStyle(
-                                    color: colorAccentGreen,
-                                    fontFamily: fontRegular,
-                                    fontSize: textSizeSMedium,
-                                  )),
-                            ]),
-                      ))),
-              Expanded(
-                  flex: 3,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(right: 12.0),
-                          child: Container(
-                            height: 30,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                              color: colorAccentGreen,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
-                            ),
-                            child: const Center(
-                              child: Text('Add to cart',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: fontRegular,
-                                    fontSize: textSizeSmall,
-                                  )),
-                            ),
-                          )),
-                    ],
-                  )),
-            ],
+    child: GestureDetector(
+      onTap: () {
+        launchScreen(context, ItemDetails.tag);
+      },
+      child: Container(
+          height: 94,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
           ),
-        )),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                        child: Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
+                      child: Container(
+                        // color: Colors.red,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            image: DecorationImage(
+                              image: AssetImage(model.image),
+                              fit: BoxFit.fill,
+                            )),
+                      ),
+                    ))),
+                Expanded(
+                    flex: 4,
+                    child: Container(
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(model.name,
+                                    style: const TextStyle(
+                                      fontFamily: fontBold,
+                                      fontSize: textSizeMedium,
+                                    )),
+                                // const SizedBox(height: 4),
+                                Text(model.arabic,
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontFamily: fontLight,
+                                      fontSize: textSizeSMedium,
+                                    )),
+                                Text(model.price,
+                                    style: const TextStyle(
+                                      color: colorAccentGreen,
+                                      fontFamily: fontRegular,
+                                      fontSize: textSizeSMedium,
+                                    )),
+                              ]),
+                        ))),
+                Expanded(
+                    flex: 3,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: GestureDetector(
+                              onTap: () {
+                                launchScreen(context, ItemsCart.tag);
+                              },
+                              child: Container(
+                                height: 30,
+                                width: MediaQuery.of(context).size.width,
+                                decoration: const BoxDecoration(
+                                  color: colorAccentGreen,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(4)),
+                                ),
+                                child: const Center(
+                                  child: Text('Add to cart',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: fontRegular,
+                                        fontSize: textSizeSmall,
+                                      )),
+                                ),
+                              ),
+                            )),
+                      ],
+                    )),
+              ],
+            ),
+          )),
+    ),
   );
+}
+
+Widget itemNotFound(context) {
+  return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 150.0),
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            ic_alert,
+          ),
+          // svgPicture(ic_alert_triangle, Colors.grey, 32.0),
+          const SizedBox(height: 6),
+          text(
+            'No item found ...',
+            '',
+            fontLight,
+            18.0,
+          ),
+        ],
+      ));
 }

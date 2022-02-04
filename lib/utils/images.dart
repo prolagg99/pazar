@@ -1,6 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
-// const ic_server = "images/server.png";
+// icons
+const ic_money = "images/ic_money.png";
+const ic_alert = "images/ic_alert.png";
+const ic_alert_triangle = "images/ic_alert_triangle.svg";
 
 // dishes img
 const img_tacos = "images/tacos.jpeg";
