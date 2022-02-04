@@ -3,6 +3,8 @@ import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/item_details.dart';
 import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/restaurant_dishes.dart';
+import 'package:pazar/screen/scroll.dart';
+import 'package:pazar/screen/scrollsilver.dart';
 
 void main() async {
   runApp(const Pazar());
@@ -16,8 +18,8 @@ class Pazar extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/': (context) => const Home(),
-        Home.tag: (context) => const Home(),
+        // '/': (context) => const Home(),
+        '/': (context) => const RestaurantDishes(),
         ItemDetails.tag: (context) => const ItemDetails(),
         ItemsCart.tag: (context) => const ItemsCart(),
         RestaurantDishes.tag: (context) => const RestaurantDishes(),

@@ -27,6 +27,36 @@ SvgPicture svgPicture(icon, color, size) {
   );
 }
 
+AppBar appBar(context) {
+  return AppBar(
+    automaticallyImplyLeading: false,
+    backgroundColor: colorPrimary,
+    elevation: 0,
+    toolbarHeight: 95,
+    leading: GestureDetector(
+      onTap: () => back(context),
+      child: Container(
+        padding: const EdgeInsets.only(left: 22),
+        child: const Icon(Icons.arrow_back, size: 32),
+      ),
+    ),
+    flexibleSpace: SafeArea(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: colorAccentGreen,
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(36)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            text('Kababji', Colors.white, fontRegular, 22.0),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget appBarTitle() {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -73,8 +103,8 @@ Widget appBarTitle() {
 }
 
 Widget text(text, textColor, fontFamily, fontSize
-    // {
-    // var fontSize = textSizeMedium,
+
+    // {var fontSize = textSizeMedium,
     // textColor = food_textColorPrimary,
     // var fontFamily = fontRegular,
     // var isCentered = false,
@@ -83,13 +113,14 @@ Widget text(text, textColor, fontFamily, fontSize
     // var textAllCaps = false,
     // var isLongText = false}
     ) {
+  var latterSpacing = 0.50;
   return Text(text,
       style: TextStyle(
         color: textColor != '' ? textColor : Colors.black,
         fontFamily: fontFamily,
         fontSize: fontSize,
         // height: 1.5,
-        // letterSpacing: latterSpacing
+        letterSpacing: latterSpacing,
       ));
 }
 
@@ -179,9 +210,7 @@ Widget itemCard(context, model) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 20),
     child: GestureDetector(
-      onTap: () {
-        launchScreen(context, ItemDetails.tag);
-      },
+      onTap: () => launchScreen(context, ItemDetails.tag),
       child: Container(
           height: 94,
           decoration: BoxDecoration(
@@ -246,9 +275,7 @@ Widget itemCard(context, model) {
                         Padding(
                             padding: const EdgeInsets.only(right: 12.0),
                             child: GestureDetector(
-                              onTap: () {
-                                launchScreen(context, ItemsCart.tag);
-                              },
+                              onTap: () => launchScreen(context, ItemsCart.tag),
                               child: Container(
                                 height: 30,
                                 width: MediaQuery.of(context).size.width,

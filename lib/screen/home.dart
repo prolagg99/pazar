@@ -164,10 +164,8 @@ class _HomeState extends State<Home> {
                                             MediaQuery.of(context).size.height *
                                                 0.20,
                                         child: GestureDetector(
-                                          onTap: () {
-                                            launchScreen(
-                                                context, RestaurantDishes.tag);
-                                          },
+                                          onTap: () => launchScreen(
+                                              context, RestaurantDishes.tag),
                                           child: restaurantList(
                                               mRestaurants, lastItem),
                                         )),
