@@ -27,7 +27,7 @@ SvgPicture svgPicture(icon, color, size) {
   );
 }
 
-AppBar appBar(context) {
+AppBar appBar(context, title) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: colorPrimary,
@@ -37,7 +37,7 @@ AppBar appBar(context) {
       onTap: () => back(context),
       child: Container(
         padding: const EdgeInsets.only(left: 22),
-        child: const Icon(Icons.arrow_back, size: 32),
+        child: const Icon(Icons.arrow_back, size: 30),
       ),
     ),
     flexibleSpace: SafeArea(
@@ -49,7 +49,7 @@ AppBar appBar(context) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            text('Kababji', Colors.white, fontRegular, 22.0),
+            text(title, Colors.white, fontRegular, 22.0),
           ],
         ),
       ),
@@ -120,7 +120,7 @@ Widget text(text, textColor, fontFamily, fontSize
         fontFamily: fontFamily,
         fontSize: fontSize,
         // height: 1.5,
-        letterSpacing: latterSpacing,
+        // letterSpacing: latterSpacing,
       ));
 }
 

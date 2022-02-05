@@ -3,6 +3,8 @@
 // icons
 const ic_money = "images/ic_money.png";
 const ic_alert = "images/ic_alert.png";
+const ic_clock = "images/ic_clock.svg";
+const ic_alert_circle = "images/ic_alert_circle.svg";
 const ic_alert_triangle = "images/ic_alert_triangle.svg";
 
 // dishes img

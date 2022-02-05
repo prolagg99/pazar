@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:pazar/utils/data.dart';
 import 'package:pazar/model/model.dart';
-import 'package:pazar/utils/widget.dart';
 
 class TestScroll extends StatefulWidget {
   const TestScroll({Key? key}) : super(key: key);

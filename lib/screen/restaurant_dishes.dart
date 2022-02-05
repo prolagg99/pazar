@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pazar/model/model.dart';
-import 'package:pazar/screen/item_details.dart';
-import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/utils/colors.dart';
-import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/data.dart';
 import 'package:pazar/utils/extension.dart';
-import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
 class RestaurantDishes extends StatefulWidget {
@@ -35,15 +30,15 @@ class _RestaurantDishesState extends State<RestaurantDishes> {
         behavior: MyBehavior(),
         child: CustomScrollView(slivers: <Widget>[
           SliverAppBar(
+            automaticallyImplyLeading: false,
             expandedHeight: 95,
             pinned: false,
             snap: false,
             floating: true,
-            flexibleSpace: appBar(context),
+            flexibleSpace: appBar(context, 'kababji'),
           ),
           SliverFillRemaining(
               child: Container(
-            // color: Colors.red,
             child: dishesList(_mDishes),
           ))
         ]),
