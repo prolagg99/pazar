@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/restaurant_dishes.dart';
+import 'package:pazar/screen/scroll.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/data.dart';

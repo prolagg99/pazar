@@ -49,7 +49,7 @@ AppBar appBar(context, title) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            text(title, Colors.white, fontRegular, 22.0),
+            text(title, textColor: Colors.white, fontSize: 22.0),
           ],
         ),
       ),
@@ -73,8 +73,7 @@ Widget appBarTitle() {
               const SizedBox(width: 4),
               Align(
                 alignment: Alignment.centerLeft,
-                child: text(
-                    '0 pts', colorAccentGreen, fontRegular, textSizeMedium),
+                child: text('0 pts', textColor: colorAccentGreen),
               ),
             ],
           ),
@@ -82,7 +81,8 @@ Widget appBarTitle() {
         Expanded(
           child: Align(
               alignment: Alignment.center,
-              child: text('ILii Ne', '', fontBold, textSizeSmall)),
+              child: text('ILii Ne',
+                  fontFamily: fontBold, fontSize: textSizeSmall)),
         ),
         const Expanded(
           child: SizedBox(
@@ -102,26 +102,25 @@ Widget appBarTitle() {
   );
 }
 
-Widget text(text, textColor, fontFamily, fontSize
-
-    // {var fontSize = textSizeMedium,
-    // textColor = food_textColorPrimary,
-    // var fontFamily = fontRegular,
-    // var isCentered = false,
-    // var maxLine = 1,
-    // var latterSpacing = 0.25,
-    // var textAllCaps = false,
-    // var isLongText = false}
-    ) {
-  var latterSpacing = 0.50;
-  return Text(text,
+Widget text(text,
+    {var fontFamily = fontRegular,
+    var fontSize = textSizeMedium,
+    textColor = Colors.black,
+    var latterSpacing = 0.25,
+    var textAllCaps = false,
+    var isCentered = false,
+    var maxLine = 1,
+    var isLongText = false}) {
+  return Text(textAllCaps ? text.toUpperCase() : text,
+      textAlign: isCentered ? TextAlign.center : TextAlign.start,
+      maxLines: isLongText ? null : maxLine,
       style: TextStyle(
-        color: textColor != '' ? textColor : Colors.black,
-        fontFamily: fontFamily,
-        fontSize: fontSize,
-        // height: 1.5,
-        // letterSpacing: latterSpacing,
-      ));
+          fontFamily: fontFamily,
+          fontSize: fontSize,
+          color: textColor,
+          letterSpacing: latterSpacing
+          // height: 1.5,
+          ));
 }
 
 Widget carouselSliderContainer(mSlides) {
@@ -181,9 +180,12 @@ Widget textCard(context, title, subtitle) {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text(title, '', fontBold, textSizeMedium),
+              text(title, fontFamily: fontBold),
               const SizedBox(height: 4),
-              text(subtitle, Colors.grey[600], fontLight, textSizeSMedium),
+              text(subtitle,
+                  textColor: Colors.grey[600],
+                  fontFamily: fontLight,
+                  fontSize: textSizeSMedium),
             ])),
   );
 }
@@ -247,24 +249,22 @@ Widget itemCard(context, model) {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(model.name,
-                                    style: const TextStyle(
-                                      fontFamily: fontBold,
-                                      fontSize: textSizeMedium,
-                                    )),
+                                text(
+                                  model.name,
+                                  fontFamily: fontBold,
+                                ),
                                 // const SizedBox(height: 4),
-                                Text(model.arabic,
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontFamily: fontLight,
-                                      fontSize: textSizeSMedium,
-                                    )),
-                                Text(model.price,
-                                    style: const TextStyle(
-                                      color: colorAccentGreen,
-                                      fontFamily: fontRegular,
-                                      fontSize: textSizeSMedium,
-                                    )),
+                                text(
+                                  model.arabic,
+                                  fontFamily: fontLight,
+                                  fontSize: textSizeSMedium,
+                                ),
+                                text(
+                                  model.price,
+                                  textColor: colorAccentGreen,
+                                  fontFamily: fontRegular,
+                                  fontSize: textSizeSMedium,
+                                ),
                               ]),
                         ))),
                 Expanded(
@@ -284,14 +284,13 @@ Widget itemCard(context, model) {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(4)),
                                 ),
-                                child: const Center(
-                                  child: Text('Add to cart',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: fontRegular,
-                                        fontSize: textSizeSmall,
-                                      )),
+                                child: Center(
+                                  child: text(
+                                    'Add to cart',
+                                    textColor: Colors.white,
+                                    fontSize: textSizeSmall,
+                                    isCentered: true,
+                                  ),
                                 ),
                               ),
                             )),
@@ -318,9 +317,8 @@ Widget itemNotFound(context) {
           const SizedBox(height: 6),
           text(
             'No item found ...',
-            '',
-            fontLight,
-            18.0,
+            fontFamily: fontLight,
+            fontSize: textSizeMLarge,
           ),
         ],
       ));

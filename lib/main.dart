@@ -16,7 +16,7 @@ class Pazar extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/': (context) => const ItemDetails(),
+        '/': (context) => const Home(),
         // '/': (context) => const RestaurantDishes(),
         ItemDetails.tag: (context) => const ItemDetails(),
         ItemsCart.tag: (context) => const ItemsCart(),

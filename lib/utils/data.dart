@@ -35,6 +35,30 @@ List<Dishes> getDishes() {
       price: '300'));
   data.add(Dishes(
       image: img_burger, name: 'Burger', arabic: 'تشيز برقر', price: '300'));
+  data.add(Dishes(
+      image: img_tacos,
+      name: 'Tacos poulet L',
+      arabic: 'L طاكوس دجاج',
+      price: '450'));
+  data.add(Dishes(
+      image: img_pizza,
+      name: 'Pizza simple L',
+      arabic: 'L بيتزا عادية',
+      price: '300'));
+  data.add(Dishes(
+      image: img_burger, name: 'Burger', arabic: 'تشيز برقر', price: '300'));
+  data.add(Dishes(
+      image: img_tacos,
+      name: 'Tacos poulet L',
+      arabic: 'L طاكوس دجاج',
+      price: '450'));
+  data.add(Dishes(
+      image: img_pizza,
+      name: 'Pizza simple L',
+      arabic: 'L بيتزا عادية',
+      price: '300'));
+  data.add(Dishes(
+      image: img_burger, name: 'Burger', arabic: 'تشيز برقر', price: '300'));
   return data;
 }
 

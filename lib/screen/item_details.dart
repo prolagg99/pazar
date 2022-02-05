@@ -47,8 +47,11 @@ class _ItemDetailsState extends State<ItemDetails> {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: Align(
-                    child: text('Add To Cart', Colors.white, fontRegular,
-                        textSizeMLarge),
+                    child: text(
+                      'Add To Cart',
+                      textColor: Colors.white,
+                      fontSize: textSizeMLarge,
+                    ),
                   ))
             ],
           ))
@@ -75,8 +78,11 @@ Widget itemDetailsCard(context) {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child:
-                          text('Tacos poulet L', '', fontBold, textSizeLarge)),
+                      child: text(
+                        'Tacos poulet L',
+                        fontFamily: fontBold,
+                        fontSize: textSizeLarge,
+                      )),
                 )),
             Expanded(
                 flex: 6,
@@ -101,13 +107,16 @@ Widget itemDetailsCard(context) {
                             alignment: Alignment.bottomLeft,
                             child: Row(
                               children: [
-                                text('Category:', Colors.grey[600], fontBold,
-                                    textSizeSMedium),
+                                text('Category:',
+                                    textColor: Colors.grey[600],
+                                    fontFamily: fontBold,
+                                    fontSize: textSizeSMedium),
                                 const SizedBox(width: 6),
-                                text('Kababji', '', fontBold, textSizeSMedium),
+                                text('Kababji',
+                                    fontFamily: fontBold,
+                                    fontSize: textSizeSMedium),
                                 const SizedBox(width: 6),
-                                text(
-                                    'كبابجي', '', fontRegular, textSizeSMedium),
+                                text('كبابجي', fontSize: textSizeSMedium),
                               ],
                             )),
                       ),
@@ -132,14 +141,14 @@ Widget itemDetailsCard(context) {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        text(
-                                            'delivery is available',
-                                            Colors.grey[600],
-                                            fontBold,
-                                            textSizeSmall),
+                                        text('delivery is available',
+                                            textColor: Colors.grey[600],
+                                            fontFamily: fontBold,
+                                            fontSize: textSizeSmall,
+                                            latterSpacing: 0.0),
                                         const SizedBox(height: 2),
-                                        text('09:00-22:00', '', fontRegular,
-                                            textSizeSMedium),
+                                        text('09:00-22:00',
+                                            fontSize: textSizeSMedium),
                                       ],
                                     )
                                   ],
@@ -171,13 +180,12 @@ Widget itemDetailsCard(context) {
                                           svgPicture(ic_alert_circle,
                                               Colors.orangeAccent, 24.0),
                                           const SizedBox(width: 4),
-                                          const Flexible(
-                                            child: Text(
-                                              'the delivery can be free if you have enough points',
-                                              style: TextStyle(
-                                                  fontFamily: fontRegular,
-                                                  fontSize: textSizeXSmall),
-                                            ),
+                                          Flexible(
+                                            child: text(
+                                                'the delivery can be free if you have enough points',
+                                                fontSize: textSizeXSmall,
+                                                latterSpacing: 0.0,
+                                                isLongText: true),
                                           )
                                         ],
                                       ),
@@ -198,11 +206,16 @@ Widget itemDetailsCard(context) {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            text('Price:', colorAccentGreen, fontBold,
-                                textSizeMLarge),
+                            text('Price:',
+                                textColor: colorAccentGreen,
+                                fontFamily: fontBold,
+                                fontSize: textSizeMLarge),
                             const SizedBox(width: 2),
-                            text('450.00 DA', colorAccentGreen, fontBold,
-                                textSizeMedium),
+                            text(
+                              '450.00 DA',
+                              textColor: colorAccentGreen,
+                              fontFamily: fontBold,
+                            ),
                           ],
                         ),
                       ),
