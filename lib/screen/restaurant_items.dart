@@ -5,16 +5,15 @@ import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 
-class RestaurantDishes extends StatefulWidget {
-  const RestaurantDishes({Key? key}) : super(key: key);
-  static String tag = '/RestaurantDishes';
+class RestaurantItems extends StatefulWidget {
+  const RestaurantItems({Key? key}) : super(key: key);
+  static String tag = '/RestaurantItems';
 
   @override
-  _RestaurantDishesState createState() => _RestaurantDishesState();
+  _RestaurantItemsState createState() => _RestaurantItemsState();
 }
 
-class _RestaurantDishesState extends State<RestaurantDishes>
-    with SingleTickerProviderStateMixin {
+class _RestaurantItemsState extends State<RestaurantItems> {
   List<Dishes> _mDishes = [];
   late Dishes firstItem;
 
@@ -22,7 +21,6 @@ class _RestaurantDishesState extends State<RestaurantDishes>
   void initState() {
     _mDishes = getDishes();
     firstItem = _mDishes[0];
-
     super.initState();
   }
 
@@ -41,11 +39,15 @@ class _RestaurantDishesState extends State<RestaurantDishes>
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(46))),
                 automaticallyImplyLeading: false,
-                expandedHeight: 101,
+                // expandedHeight: 101,
                 elevation: 0,
                 pinned: false,
                 snap: false,
                 floating: true,
+                bottom: const PreferredSize(
+                  preferredSize: Size.fromHeight(40.0), // Add this code
+                  child: Text(''), // Add this code
+                ),
                 flexibleSpace: appBar(context, 'kababji'),
               ),
             ];

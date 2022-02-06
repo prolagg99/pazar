@@ -27,12 +27,39 @@ SvgPicture svgPicture(icon, color, size) {
   );
 }
 
+Widget text(text,
+    {var fontFamily = fontRegular,
+    var fontSize = textSizeMedium,
+    textColor = Colors.black,
+    var latterSpacing = 0.25,
+    var textAllCaps = false,
+    var textTitleCase = false,
+    var isCentered = false,
+    var maxLine = 1,
+    var isLongText = false}) {
+  return Text(
+      textAllCaps
+          ? text.toUpperCase()
+          : textTitleCase
+              ? toTitleCase(text)
+              : toCapitalized(text),
+      textAlign: isCentered ? TextAlign.center : TextAlign.start,
+      maxLines: isLongText ? null : maxLine,
+      style: TextStyle(
+          fontFamily: fontFamily,
+          fontSize: fontSize,
+          color: textColor,
+          letterSpacing: latterSpacing
+          // height: 1.5,
+          ));
+}
+
 AppBar appBar(context, title) {
   return AppBar(
     automaticallyImplyLeading: false,
     backgroundColor: colorPrimary,
     elevation: 0,
-    toolbarHeight: 101,
+    toolbarHeight: 96,
     leading: GestureDetector(
       onTap: () => back(context),
       child: Container(
@@ -102,33 +129,6 @@ Widget appBarTitle() {
   );
 }
 
-Widget text(text,
-    {var fontFamily = fontRegular,
-    var fontSize = textSizeMedium,
-    textColor = Colors.black,
-    var latterSpacing = 0.25,
-    var textAllCaps = false,
-    var textTitleCase = false,
-    var isCentered = false,
-    var maxLine = 1,
-    var isLongText = false}) {
-  return Text(
-      textAllCaps
-          ? text.toUpperCase()
-          : textTitleCase
-              ? toTitleCase(text)
-              : toCapitalized(text),
-      textAlign: isCentered ? TextAlign.center : TextAlign.start,
-      maxLines: isLongText ? null : maxLine,
-      style: TextStyle(
-          fontFamily: fontFamily,
-          fontSize: fontSize,
-          color: textColor,
-          letterSpacing: latterSpacing
-          // height: 1.5,
-          ));
-}
-
 Widget carouselSliderContainer(mSlides) {
   return CarouselSlider.builder(
     itemCount: mSlides.length,
@@ -151,31 +151,10 @@ Widget slideContainer(context, model) {
       borderRadius: BorderRadius.circular(16),
       child: Image.asset(
         model.image,
-        // height: 20,
         fit: BoxFit.cover,
       ),
     ),
   );
-}
-
-ListView restaurantList(mRestaurants, lastItem) {
-  return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: mRestaurants.length,
-      itemBuilder: (context, index) {
-        return restaurantCard(context, mRestaurants[index], lastItem);
-      });
-}
-
-ListView dishesList(mDishes) {
-  return ListView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(0.0),
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: mDishes.length,
-      itemBuilder: (context, index) {
-        return itemCard(context, mDishes[index]);
-      });
 }
 
 Widget homeTextCard(context, title, subtitle) {
@@ -195,6 +174,26 @@ Widget homeTextCard(context, title, subtitle) {
                   fontSize: textSizeSMedium),
             ])),
   );
+}
+
+ListView restaurantListView(mRestaurants, lastItem) {
+  return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: mRestaurants.length,
+      itemBuilder: (context, index) {
+        return restaurantCard(context, mRestaurants[index], lastItem);
+      });
+}
+
+ListView itemListView(mDishes) {
+  return ListView.builder(
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(0.0),
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: mDishes.length,
+      itemBuilder: (context, index) {
+        return itemCard(context, mDishes[index]);
+      });
 }
 
 Widget restaurantCard(context, model, last) {
@@ -220,10 +219,8 @@ Widget itemCard(context, model) {
     padding: const EdgeInsets.only(bottom: 20),
     child: GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ItemDetails(model)),
-        );
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ItemDetails(model)));
       },
       // () => launchScreen(context, ItemDetails.tag, arguments: model),
       child: Container(
@@ -268,7 +265,7 @@ Widget itemCard(context, model) {
                                 ),
                                 // const SizedBox(height: 4),
                                 text(
-                                  model.arabic,
+                                  model.nameArab,
                                   fontFamily: fontLight,
                                   fontSize: textSizeSMedium,
                                 ),
@@ -320,13 +317,8 @@ Widget itemNotFound(context) {
   return Padding(
       padding: const EdgeInsets.symmetric(vertical: 150.0),
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            ic_alert,
-          ),
-          // svgPicture(ic_alert_triangle, Colors.grey, 32.0),
+          Icon(Icons.warning_amber_rounded, size: 44, color: Colors.grey[400]),
           const SizedBox(height: 6),
           text(
             'No item found ...',
@@ -334,5 +326,168 @@ Widget itemNotFound(context) {
             fontSize: textSizeMLarge,
           ),
         ],
+      ));
+}
+
+Widget itemDetailsCard(context, model) {
+  return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: text(
+                        model.name,
+                        fontFamily: fontBold,
+                        fontSize: textSizeLarge,
+                      )),
+                )),
+            Expanded(
+                flex: 6,
+                child: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          fit: BoxFit.cover, image: AssetImage(model.image)),
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(16)),
+                )),
+            // the last expanded --------------------------------------------------
+            Expanded(
+                flex: 4,
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      // color: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Row(
+                              children: [
+                                text('Category:',
+                                    textColor: Colors.grey[600],
+                                    fontFamily: fontBold,
+                                    fontSize: textSizeSMedium),
+                                const SizedBox(width: 6),
+                                text(model.category,
+                                    fontFamily: fontBold,
+                                    fontSize: textSizeSMedium),
+                                const SizedBox(width: 6),
+                                text('كبابجي', fontSize: textSizeSMedium),
+                              ],
+                            )),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      // color: Colors.black,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(Icons.watch_later,
+                                        color: colorAccentGreen),
+                                    const SizedBox(width: 4),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        text('delivery is available',
+                                            textColor: Colors.grey[600],
+                                            fontFamily: fontBold,
+                                            fontSize: textSizeSmall,
+                                            latterSpacing: 0.0),
+                                        const SizedBox(height: 2),
+                                        text('09:00-22:00',
+                                            fontSize: textSizeSMedium),
+                                      ],
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: 160,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.orangeAccent,
+                                            width: 1.5),
+                                        borderRadius:
+                                            BorderRadius.circular(06)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 6),
+                                      child: Row(
+                                        children: [
+                                          svgPicture(ic_alert_circle,
+                                              Colors.orangeAccent, 24.0),
+                                          const SizedBox(width: 4),
+                                          Flexible(
+                                            child: text(
+                                                'the delivery can be free if you have enough points',
+                                                fontSize: textSizeXSmall,
+                                                latterSpacing: 0.0,
+                                                isLongText: true),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            text('Price:',
+                                textColor: colorAccentGreen,
+                                fontFamily: fontBold,
+                                fontSize: textSizeMLarge),
+                            const SizedBox(width: 2),
+                            text(
+                              model.price + ' DA',
+                              textColor: colorAccentGreen,
+                              fontFamily: fontBold,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )),
+          ],
+        ),
       ));
 }

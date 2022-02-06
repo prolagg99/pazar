@@ -13,76 +13,121 @@ List<Dishes> getDishes() {
   List<Dishes> data = [];
   data.add(Dishes(
       category: 'kababji',
+      categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
-      arabic: 'L طاكوس دجاج',
+      nameArab: 'L طاكوس دجاج',
+      price: '450.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_pizza,
+      name: 'pizza simple L',
+      nameArab: 'L بيتزا عادية',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_burger,
+      name: 'burger',
+      nameArab: 'تشيز برقر',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_tacos,
+      name: 'tacos poulet L',
+      nameArab: 'L طاكوس دجاج',
+      price: '450.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_pizza,
+      name: 'pizza simple L',
+      nameArab: 'L بيتزا عادية',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_burger,
+      name: 'burger',
+      nameArab: 'تشيز برقر',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_tacos,
+      name: 'tacos poulet L',
+      nameArab: 'L طاكوس دجاج',
+      price: '450.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_pizza,
+      name: 'pizza simple L',
+      nameArab: 'L بيتزا عادية',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      categoryArab: 'كبابجي',
+      image: img_burger,
+      name: 'burger',
+      nameArab: 'تشيز برقر',
+      price: '300.00'));
+  data.add(Dishes(
+      category: 'kababji',
+      image: img_tacos,
+      name: 'tacos poulet L',
+      nameArab: 'L طاكوس دجاج',
       price: '450.00'));
   data.add(Dishes(
       category: 'kababji',
       image: img_pizza,
       name: 'pizza simple L',
-      arabic: 'L بيتزا عادية',
+      nameArab: 'L بيتزا عادية',
       price: '300.00'));
   data.add(Dishes(
       category: 'kababji',
       image: img_burger,
       name: 'burger',
-      arabic: 'تشيز برقر',
+      nameArab: 'تشيز برقر',
       price: '300.00'));
+
   data.add(Dishes(
       category: 'kababji',
+      categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
-      arabic: 'L طاكوس دجاج',
+      nameArab: 'L طاكوس دجاج',
       price: '450.00'));
   data.add(Dishes(
       category: 'kababji',
-      image: img_pizza,
-      name: 'pizza simple L',
-      arabic: 'L بيتزا عادية',
-      price: '300.00'));
-  data.add(Dishes(
-      category: 'kababji',
-      image: img_burger,
-      name: 'burger',
-      arabic: 'تشيز برقر',
-      price: '300.00'));
-  data.add(Dishes(
-      category: 'kababji',
+      categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
-      arabic: 'L طاكوس دجاج',
+      nameArab: 'L طاكوس دجاج',
       price: '450.00'));
   data.add(Dishes(
       category: 'kababji',
-      image: img_pizza,
-      name: 'pizza simple L',
-      arabic: 'L بيتزا عادية',
-      price: '300.00'));
-  data.add(Dishes(
-      category: 'kababji',
-      image: img_burger,
-      name: 'burger',
-      arabic: 'تشيز برقر',
-      price: '300.00'));
-  data.add(Dishes(
-      category: 'kababji',
+      categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
-      arabic: 'L طاكوس دجاج',
+      nameArab: 'L طاكوس دجاج',
       price: '450.00'));
   data.add(Dishes(
       category: 'kababji',
-      image: img_pizza,
-      name: 'pizza simple L',
-      arabic: 'L بيتزا عادية',
-      price: '300.00'));
+      categoryArab: 'كبابجي',
+      image: img_tacos,
+      name: 'tacos poulet L',
+      nameArab: 'L طاكوس دجاج',
+      price: '450.00'));
   data.add(Dishes(
       category: 'kababji',
-      image: img_burger,
-      name: 'burger',
-      arabic: 'تشيز برقر',
-      price: '300.00'));
+      categoryArab: 'كبابجي',
+      image: img_tacos,
+      name: 'tacos poulet L',
+      nameArab: 'L طاكوس دجاج',
+      price: '450.00'));
   return data;
 }
 

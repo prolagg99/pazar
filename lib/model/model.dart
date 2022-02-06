@@ -12,9 +12,16 @@ class Restaurants {
 
 class Dishes {
   var category;
+  var categoryArab;
   var image;
   var name;
-  var arabic;
+  var nameArab;
   var price;
-  Dishes({this.category, this.image, this.name, this.arabic, this.price});
+  Dishes(
+      {this.category,
+      this.categoryArab,
+      this.image,
+      this.name,
+      this.nameArab,
+      this.price});
 }

@@ -1,32 +1,38 @@
-// import 'dart:math';
 // import 'package:flutter/material.dart';
 // import 'package:pazar/model/model.dart';
-// import 'package:pazar/utils/data.dart';
+// import 'package:pazar/screen/restaurant_items.dart';
+// import 'package:pazar/utils/data_generation.dart';
+// import 'package:pazar/utils/extension.dart';
 // import 'package:pazar/utils/widget.dart';
+// import 'package:pazar/screen/restaurant_items.dart';
 
-// class RestaurantDishes extends StatefulWidget {
-//   const RestaurantDishes({Key? key}) : super(key: key);
+// class RestaurantDishes2 extends StatefulWidget {
+//   const RestaurantDishes2({Key? key}) : super(key: key);
 
-//   static String tag = '/RestaurantDishes';
+//   static String tag = '/RestaurantDishes2';
 
 //   @override
-//   _RestaurantDishesState createState() => _RestaurantDishesState();
+//   _RestaurantDishes2State createState() => _RestaurantDishes2State();
 // }
 
-// class _RestaurantDishesState extends State<RestaurantDishes>
+// class _RestaurantDishes2State extends State<RestaurantDishes2>
 //     with SingleTickerProviderStateMixin {
-//   late TabController _tabController;
+//   final TextEditingController _textEditingController = TextEditingController();
+//   List<Dishes> dishesListOnSearch = [];
+
+//   List<Restaurants> mRestaurants = [];
 //   List<Dishes> _mDishes = [];
+//   late Dishes firstItem;
+//   List<Slides> mSlides = [];
+//   late Restaurants lastItem;
 
 //   @override
 //   void initState() {
-//     _tabController = TabController(
-//       initialIndex: 0,
-//       length: 2,
-//       vsync: this,
-//     );
 //     _mDishes = getDishes();
-
+//     firstItem = _mDishes[0];
+//     mRestaurants = getRestaurantImages();
+//     lastItem = mRestaurants[mRestaurants.length - 1];
+//     mSlides = getSlides();
 //     super.initState();
 //   }
 
@@ -43,27 +49,8 @@
 //             title: Text('Demo'),
 //           ),
 //         ),
-//         SliverGrid(
-//           gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-//             maxCrossAxisExtent: 200.0,
-//             mainAxisSpacing: 10.0,
-//             crossAxisSpacing: 10.0,
-//             childAspectRatio: 4.0,
-//           ),
-//           delegate: SliverChildBuilderDelegate(
-//             (BuildContext context, int index) {
-//               return itemCard(context, _mDishes[1]);
-//             },
-//             childCount: 50,
-//           ),
-//         ),
+//         SliverFillRemaining(hasScrollBody: false, child: itemNotFound(context))
 //       ],
 //     ));
-//   }
-
-//   @override
-//   void dispose() {
-//     _tabController.dispose();
-//     super.dispose();
 //   }
 // }
