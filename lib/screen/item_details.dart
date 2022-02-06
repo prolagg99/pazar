@@ -1,12 +1,19 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
+import 'package:pazar/model/model.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
 class ItemDetails extends StatefulWidget {
-  const ItemDetails({Key? key}) : super(key: key);
+  // const ItemDetails({Key? key}) : super(key: key);
   static String tag = '/ItemDetails';
+
+  final Dishes model;
+  const ItemDetails(this.model);
 
   @override
   _ItemDetailsState createState() => _ItemDetailsState();
@@ -15,53 +22,38 @@ class ItemDetails extends StatefulWidget {
 class _ItemDetailsState extends State<ItemDetails> {
   @override
   Widget build(BuildContext context) {
+    changeStatusColor(colorAccentGreen);
     return Scaffold(
-      backgroundColor: colorPrimary,
-      body: ScrollConfiguration(
-        behavior: MyBehavior(),
-        child: CustomScrollView(slivers: <Widget>[
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            expandedHeight: 100,
-            pinned: false,
-            snap: false,
-            floating: true,
-            flexibleSpace: appBar(context, 'item details'),
-          ),
-          SliverFillRemaining(
-              child: Column(
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.56,
-                    child: itemDetailsCard(context)),
-              ),
-              Container(
-                  height: 55,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: colorAccentGreen,
-                    borderRadius: BorderRadius.circular(32),
+        backgroundColor: colorPrimary,
+        appBar: appBar(context, 'item details'),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+              child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.56,
+                  child: itemDetailsCard(context, widget.model)),
+            ),
+            Container(
+                height: 55,
+                width: 220,
+                decoration: BoxDecoration(
+                  color: colorAccentGreen,
+                  borderRadius: BorderRadius.circular(32),
+                ),
+                child: Align(
+                  child: text(
+                    'Add To Cart',
+                    textColor: Colors.white,
+                    fontSize: textSizeMLarge,
                   ),
-                  child: Align(
-                    child: text(
-                      'Add To Cart',
-                      textColor: Colors.white,
-                      fontSize: textSizeMLarge,
-                    ),
-                  ))
-            ],
-          ))
-        ]),
-      ),
-    );
+                ))
+          ],
+        ));
   }
 }
 
-Widget itemDetailsCard(context) {
+Widget itemDetailsCard(context, model) {
   return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -79,7 +71,7 @@ Widget itemDetailsCard(context) {
                   child: Align(
                       alignment: Alignment.centerLeft,
                       child: text(
-                        'Tacos poulet L',
+                        model.name,
                         fontFamily: fontBold,
                         fontSize: textSizeLarge,
                       )),
@@ -88,8 +80,8 @@ Widget itemDetailsCard(context) {
                 flex: 6,
                 child: Container(
                   decoration: BoxDecoration(
-                      image: const DecorationImage(
-                          fit: BoxFit.cover, image: AssetImage(img_tacos)),
+                      image: DecorationImage(
+                          fit: BoxFit.cover, image: AssetImage(model.image)),
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(16)),
                 )),
@@ -112,7 +104,7 @@ Widget itemDetailsCard(context) {
                                     fontFamily: fontBold,
                                     fontSize: textSizeSMedium),
                                 const SizedBox(width: 6),
-                                text('Kababji',
+                                text(model.category,
                                     fontFamily: fontBold,
                                     fontSize: textSizeSMedium),
                                 const SizedBox(width: 6),
@@ -212,7 +204,7 @@ Widget itemDetailsCard(context) {
                                 fontSize: textSizeMLarge),
                             const SizedBox(width: 2),
                             text(
-                              '450.00 DA',
+                              model.price + ' DA',
                               textColor: colorAccentGreen,
                               fontFamily: fontBold,
                             ),

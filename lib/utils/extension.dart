@@ -1,5 +1,6 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:statusbar/statusbar.dart';
 
 changeStatusColor(Color color) {
@@ -18,25 +19,22 @@ back(var context) {
   Navigator.pop(context);
 }
 
+toCapitalized(var content) {
+  return content != ""
+      ? content.replaceFirst(content[0], content[0].toUpperCase())
+      : "";
+}
 
-// toCapitalized(var content) {
-//   return content != ""
-//       ? content.replaceFirst(content[0], content[0].toUpperCase())
-//       : "";
-// }
+toTitleCase(var content) {
+  return content != ""
+      ? content
+          .replaceAll(RegExp(' +'), ' ')
+          .split(' ')
+          .map((content) => toCapitalized(content))
+          .join(' ')
+      : "";
+}
 
-// toTitleCase(var content) {
-//   return content != ""
-//       ? content
-//           .replaceAll(RegExp(' +'), ' ')
-//           .split(' ')
-//           .map((content) => toCapitalized(content))
-//           .join(' ')
-//       : "";
-// }
-
-// toLowerCase(var content){
-//   return content != "" ?
-//   content.toLowerCase() : "" ;
-
-// }
+toLowerCase(var content) {
+  return content != "" ? content.toLowerCase() : "";
+}

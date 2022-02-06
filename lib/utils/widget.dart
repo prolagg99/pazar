@@ -32,7 +32,7 @@ AppBar appBar(context, title) {
     automaticallyImplyLeading: false,
     backgroundColor: colorPrimary,
     elevation: 0,
-    toolbarHeight: 95,
+    toolbarHeight: 101,
     leading: GestureDetector(
       onTap: () => back(context),
       child: Container(
@@ -108,10 +108,16 @@ Widget text(text,
     textColor = Colors.black,
     var latterSpacing = 0.25,
     var textAllCaps = false,
+    var textTitleCase = false,
     var isCentered = false,
     var maxLine = 1,
     var isLongText = false}) {
-  return Text(textAllCaps ? text.toUpperCase() : text,
+  return Text(
+      textAllCaps
+          ? text.toUpperCase()
+          : textTitleCase
+              ? toTitleCase(text)
+              : toCapitalized(text),
       textAlign: isCentered ? TextAlign.center : TextAlign.start,
       maxLines: isLongText ? null : maxLine,
       style: TextStyle(
@@ -164,6 +170,7 @@ ListView restaurantList(mRestaurants, lastItem) {
 ListView dishesList(mDishes) {
   return ListView.builder(
       shrinkWrap: true,
+      padding: const EdgeInsets.all(0.0),
       physics: const NeverScrollableScrollPhysics(),
       itemCount: mDishes.length,
       itemBuilder: (context, index) {
@@ -171,7 +178,7 @@ ListView dishesList(mDishes) {
       });
 }
 
-Widget textCard(context, title, subtitle) {
+Widget homeTextCard(context, title, subtitle) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10),
     child: SizedBox(
@@ -180,7 +187,7 @@ Widget textCard(context, title, subtitle) {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              text(title, fontFamily: fontBold),
+              text(title, fontFamily: fontBold, textTitleCase: true),
               const SizedBox(height: 4),
               text(subtitle,
                   textColor: Colors.grey[600],
@@ -212,7 +219,13 @@ Widget itemCard(context, model) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 20),
     child: GestureDetector(
-      onTap: () => launchScreen(context, ItemDetails.tag),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ItemDetails(model)),
+        );
+      },
+      // () => launchScreen(context, ItemDetails.tag, arguments: model),
       child: Container(
           height: 94,
           decoration: BoxDecoration(
@@ -260,9 +273,9 @@ Widget itemCard(context, model) {
                                   fontSize: textSizeSMedium,
                                 ),
                                 text(
-                                  model.price,
+                                  model.price + ' DA',
                                   textColor: colorAccentGreen,
-                                  fontFamily: fontRegular,
+                                  fontFamily: fontBold,
                                   fontSize: textSizeSMedium,
                                 ),
                               ]),

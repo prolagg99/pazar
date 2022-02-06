@@ -5,7 +5,7 @@ import 'package:pazar/screen/restaurant_dishes.dart';
 import 'package:pazar/screen/scroll.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
-import 'package:pazar/utils/data.dart';
+import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 
@@ -154,10 +154,10 @@ class _HomeState extends State<Home> {
                                     child: carouselSliderContainer(mSlides),
                                   ),
                                   Flexible(
-                                    child: textCard(
+                                    child: homeTextCard(
                                         context,
-                                        'Today new Available',
-                                        'Best of the today items list'),
+                                        'today new available',
+                                        'best of the today items list'),
                                   ),
                                   Flexible(
                                     child: SizedBox(
@@ -172,8 +172,8 @@ class _HomeState extends State<Home> {
                                         )),
                                   ),
                                   Flexible(
-                                    child: textCard(context, 'All Items',
-                                        'All Items with best items list'),
+                                    child: homeTextCard(context, 'all items',
+                                        'all items with best items list'),
                                   ),
                                   Flexible(
                                     child: SizedBox(child: dishesList(mDishes)),
