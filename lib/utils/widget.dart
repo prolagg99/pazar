@@ -76,7 +76,7 @@ AppBar appBar(context, title) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            text(title, textColor: Colors.white, fontSize: 22.0),
+            text(title, textColor: Colors.white, fontSize: textSizeLarge),
           ],
         ),
       ),

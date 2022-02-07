@@ -17,7 +17,7 @@ class Pazar extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         // '/': (context) => const TestScroll(),
         // '/': (context) => const RestaurantDishes2(),
-        '/': (context) => const Home(),
+        '/': (context) => const ItemsCart(),
         ItemsCart.tag: (context) => const ItemsCart(),
         RestaurantItems.tag: (context) => const RestaurantItems(),
       },
