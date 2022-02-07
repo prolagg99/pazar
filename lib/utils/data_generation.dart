@@ -9,6 +9,17 @@ List<Restaurants> getRestaurantImages() {
   return data;
 }
 
+List<Dishes> cartItems = [];
+
+void setItems(model) {
+  cartItems.add(
+      Dishes(category: model.category, image: model.image, price: model.price));
+}
+
+List<Dishes> getItems() {
+  return cartItems;
+}
+
 List<Dishes> getDishes() {
   List<Dishes> data = [];
   data.add(Dishes(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pazar/model/model.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
@@ -15,6 +17,19 @@ class ItemsCart extends StatefulWidget {
 
 class _ItemsCartState extends State<ItemsCart> {
   double totalWithDelivery = 0.0;
+  int numb = 1;
+  // get the price from db !!
+  double price = 1450.0;
+  double _totalPrice = 0.0;
+  late List<Dishes> _items;
+
+  @override
+  void initState() {
+    super.initState();
+    _items = getItems();
+    _totalPrice = price;
+    totalWithDelivery = _totalPrice + 200.0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,9 +128,155 @@ class _ItemsCartState extends State<ItemsCart> {
                       ),
                     ),
                     const SizedBox(height: 10.0),
-                    const CartItemsCard(),
-                    const CartItemsCard(),
-                    const CartItemsCard(),
+                    _items.isEmpty
+                        ? Container()
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: SizedBox(
+                              // color: Colors.red,
+                              height: 80.0,
+                              width: MediaQuery.of(context).size.width,
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 4,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 12.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                height: 66.0,
+                                                width: 58.0,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10)),
+                                                    image: DecorationImage(
+                                                      image:
+                                                          AssetImage(img_tacos),
+                                                      fit: BoxFit.fill,
+                                                    )),
+                                              ),
+                                              const SizedBox(width: 10.0),
+                                              Container(
+                                                  child: text('tacos poulet L',
+                                                      fontSize:
+                                                          textSizeSMedium)),
+                                              const SizedBox(width: 10.0),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 12.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                  height: 32.0,
+                                                  width: 56.0,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                26)),
+                                                    border:
+                                                        Border.all(width: 0.5),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: GestureDetector(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              if (numb > 1) {
+                                                                numb -= 1;
+                                                                _totalPrice =
+                                                                    _totalPrice -
+                                                                        price;
+                                                                if (totalWithDelivery ==
+                                                                    200.0) {
+                                                                  totalWithDelivery =
+                                                                      0.0;
+                                                                } else {
+                                                                  totalWithDelivery =
+                                                                      _totalPrice;
+                                                                }
+                                                              }
+                                                            });
+                                                          },
+                                                          child: SizedBox(
+                                                              child: Center(
+                                                                  child: text(
+                                                                      '-'))),
+                                                        ),
+                                                      ),
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child: Center(
+                                                            child: text('$numb',
+                                                                fontSize:
+                                                                    textSizeSMedium),
+                                                          )),
+                                                      Expanded(
+                                                          flex: 2,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                numb += 1;
+                                                                _totalPrice =
+                                                                    price *
+                                                                        numb;
+                                                                if (totalWithDelivery ==
+                                                                    0.0) {
+                                                                  totalWithDelivery =
+                                                                      _totalPrice +
+                                                                          200.0;
+                                                                } else {
+                                                                  totalWithDelivery =
+                                                                      _totalPrice;
+                                                                }
+                                                              });
+                                                            },
+                                                            child: SizedBox(
+                                                                child: Center(
+                                                                    child: text(
+                                                                        '+'))),
+                                                          )),
+                                                    ],
+                                                  )),
+                                              const SizedBox(width: 3.0),
+                                              text('X', fontSize: 9.0),
+                                              const SizedBox(width: 3.0),
+                                              text('${_totalPrice}0DA',
+                                                  textColor: colorAccentGreen,
+                                                  fontSize: textSizeSMedium),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
                   ],
                 ),
               )),
@@ -123,136 +284,136 @@ class _ItemsCartState extends State<ItemsCart> {
   }
 }
 
-class CartItemsCard extends StatefulWidget {
-  const CartItemsCard({Key? key}) : super(key: key);
+// class CartItemsCard extends StatefulWidget {
+//   const CartItemsCard({Key? key}) : super(key: key);
 
-  @override
-  State<CartItemsCard> createState() => _CartItemsCardState();
-}
+//   @override
+//   State<CartItemsCard> createState() => _CartItemsCardState();
+// }
 
-class _CartItemsCardState extends State<CartItemsCard> {
-  int numb = 1;
-  double price = 1450.0;
-  double _totalPrice = 0.0;
+// class _CartItemsCardState extends State<CartItemsCard> {
+//   int numb = 1;
+//   double price = 1450.0;
+//   double _totalPrice = 0.0;
 
-  double get totalPrice => _totalPrice;
+//   double get totalPrice => _totalPrice;
 
-  @override
-  void initState() {
-    super.initState();
-    _totalPrice = price;
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _totalPrice = price;
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: SizedBox(
-        // color: Colors.red,
-        height: 80.0,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 66.0,
-                          width: 58.0,
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              image: DecorationImage(
-                                image: AssetImage(img_tacos),
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Container(
-                            child: text('tacos poulet L',
-                                fontSize: textSizeSMedium)),
-                        const SizedBox(width: 10.0),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: Row(
-                      children: [
-                        Container(
-                            height: 32.0,
-                            width: 56.0,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(26)),
-                              border: Border.all(width: 0.5),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (numb > 1) {
-                                          numb -= 1;
-                                          _totalPrice = _totalPrice - price;
-                                        }
-                                      });
-                                    },
-                                    child: SizedBox(
-                                        child: Center(child: text('-'))),
-                                  ),
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: Center(
-                                      child: text('$numb',
-                                          fontSize: textSizeSMedium),
-                                    )),
-                                Expanded(
-                                    flex: 2,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          numb += 1;
-                                          _totalPrice = price * numb;
-                                        });
-                                      },
-                                      child: SizedBox(
-                                          child: Center(child: text('+'))),
-                                    )),
-                              ],
-                            )),
-                        const SizedBox(width: 3.0),
-                        text('X', fontSize: 9.0),
-                        const SizedBox(width: 3.0),
-                        text('${totalPrice}0DA',
-                            textColor: colorAccentGreen,
-                            fontSize: textSizeSMedium),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(vertical: 4.0),
+//       child: SizedBox(
+//         // color: Colors.red,
+//         height: 80.0,
+//         width: MediaQuery.of(context).size.width,
+//         child: Row(
+//           children: [
+//             Expanded(
+//               flex: 4,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(left: 12.0),
+//                     child: Row(
+//                       children: [
+//                         Container(
+//                           height: 66.0,
+//                           width: 58.0,
+//                           decoration: const BoxDecoration(
+//                               borderRadius:
+//                                   BorderRadius.all(Radius.circular(10)),
+//                               image: DecorationImage(
+//                                 image: AssetImage(img_tacos),
+//                                 fit: BoxFit.fill,
+//                               )),
+//                         ),
+//                         const SizedBox(width: 10.0),
+//                         Container(
+//                             child: text('tacos poulet L',
+//                                 fontSize: textSizeSMedium)),
+//                         const SizedBox(width: 10.0),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Expanded(
+//               flex: 3,
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Padding(
+//                     padding: const EdgeInsets.only(right: 12.0),
+//                     child: Row(
+//                       children: [
+//                         Container(
+//                             height: 32.0,
+//                             width: 56.0,
+//                             decoration: BoxDecoration(
+//                               borderRadius:
+//                                   const BorderRadius.all(Radius.circular(26)),
+//                               border: Border.all(width: 0.5),
+//                             ),
+//                             child: Row(
+//                               children: [
+//                                 Expanded(
+//                                   flex: 2,
+//                                   child: GestureDetector(
+//                                     onTap: () {
+//                                       setState(() {
+//                                         if (numb > 1) {
+//                                           numb -= 1;
+//                                           _totalPrice = _totalPrice - price;
+//                                         }
+//                                       });
+//                                     },
+//                                     child: SizedBox(
+//                                         child: Center(child: text('-'))),
+//                                   ),
+//                                 ),
+//                                 Expanded(
+//                                     flex: 2,
+//                                     child: Center(
+//                                       child: text('$numb',
+//                                           fontSize: textSizeSMedium),
+//                                     )),
+//                                 Expanded(
+//                                     flex: 2,
+//                                     child: GestureDetector(
+//                                       onTap: () {
+//                                         setState(() {
+//                                           numb += 1;
+//                                           _totalPrice = price * numb;
+//                                         });
+//                                       },
+//                                       child: SizedBox(
+//                                           child: Center(child: text('+'))),
+//                                     )),
+//                               ],
+//                             )),
+//                         const SizedBox(width: 3.0),
+//                         text('X', fontSize: 9.0),
+//                         const SizedBox(width: 3.0),
+//                         text('${totalPrice}0DA',
+//                             textColor: colorAccentGreen,
+//                             fontSize: textSizeSMedium),
+//                       ],
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

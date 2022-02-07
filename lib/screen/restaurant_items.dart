@@ -65,8 +65,8 @@ class _RestaurantItemsState extends State<RestaurantItems> {
                       return _mDishes[index] == firstItem
                           ? Padding(
                               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: itemCard(context, _mDishes[index]))
-                          : itemCard(context, _mDishes[index]);
+                              child: ItemCard(_mDishes[index]))
+                          : ItemCard(_mDishes[index]);
                     },
                   ),
                 ),

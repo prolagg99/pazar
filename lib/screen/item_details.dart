@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 
@@ -33,20 +34,28 @@ class _ItemDetailsState extends State<ItemDetails> {
                   height: MediaQuery.of(context).size.height * 0.56,
                   child: itemDetailsCard(context, widget.model)),
             ),
-            Container(
-                height: 55,
-                width: 220,
-                decoration: BoxDecoration(
-                  color: colorAccentGreen,
-                  borderRadius: BorderRadius.circular(32),
-                ),
-                child: Align(
-                  child: text(
-                    'Add To Cart',
-                    textColor: Colors.white,
-                    fontSize: textSizeMLarge,
+            InkWell(
+              onTap: () {
+                setState(() {
+                  setItems(widget.model);
+                });
+                // launchScreen(context, '/ItemsCart');
+              },
+              child: Container(
+                  height: 55,
+                  width: 220,
+                  decoration: BoxDecoration(
+                    color: colorAccentGreen,
+                    borderRadius: BorderRadius.circular(32),
                   ),
-                ))
+                  child: Align(
+                    child: text(
+                      'Add To Cart',
+                      textColor: Colors.white,
+                      fontSize: textSizeMLarge,
+                    ),
+                  )),
+            )
           ],
         ));
   }

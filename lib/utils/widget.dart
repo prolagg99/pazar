@@ -3,10 +3,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/item_details.dart';
-import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 
@@ -192,7 +193,7 @@ ListView itemListView(mDishes) {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: mDishes.length,
       itemBuilder: (context, index) {
-        return itemCard(context, mDishes[index]);
+        return ItemCard(mDishes[index]);
       });
 }
 
@@ -214,104 +215,228 @@ Widget restaurantCard(context, model, last) {
   );
 }
 
-Widget itemCard(context, model) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 20),
-    child: GestureDetector(
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ItemDetails(model)));
-      },
-      // () => launchScreen(context, ItemDetails.tag, arguments: model),
-      child: Container(
-          height: 94,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                        child: Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
+class ItemCard extends StatefulWidget {
+  // const ItemCard({ Key? key }) : super(key: key);
+
+  final Dishes model;
+  const ItemCard(this.model);
+
+  @override
+  _ItemCardState createState() => _ItemCardState();
+}
+
+class _ItemCardState extends State<ItemCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ItemDetails(widget.model)));
+        },
+        // () => launchScreen(context, ItemDetails.tag, arguments: model),
+        child: Container(
+            height: 94,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      flex: 2,
+                      child: SizedBox(
+                          child: Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
+                        child: Container(
+                          // color: Colors.red,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              image: DecorationImage(
+                                image: AssetImage(widget.model.image),
+                                fit: BoxFit.fill,
+                              )),
+                        ),
+                      ))),
+                  Expanded(
+                      flex: 4,
                       child: Container(
-                        // color: Colors.red,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            image: DecorationImage(
-                              image: AssetImage(model.image),
-                              fit: BoxFit.fill,
-                            )),
-                      ),
-                    ))),
-                Expanded(
-                    flex: 4,
-                    child: Container(
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                text(
-                                  model.name,
-                                  fontFamily: fontBold,
-                                ),
-                                // const SizedBox(height: 4),
-                                text(
-                                  model.nameArab,
-                                  fontFamily: fontLight,
-                                  fontSize: textSizeSMedium,
-                                ),
-                                text(
-                                  model.price + ' DA',
-                                  textColor: colorAccentGreen,
-                                  fontFamily: fontBold,
-                                  fontSize: textSizeSMedium,
-                                ),
-                              ]),
-                        ))),
-                Expanded(
-                    flex: 3,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(right: 12.0),
-                            child: GestureDetector(
-                              onTap: () => launchScreen(context, ItemsCart.tag),
-                              child: Container(
-                                height: 30,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: const BoxDecoration(
-                                  color: colorAccentGreen,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(4)),
-                                ),
-                                child: Center(
-                                  child: text(
-                                    'Add to cart',
-                                    textColor: Colors.white,
-                                    fontSize: textSizeSmall,
-                                    isCentered: true,
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  text(
+                                    widget.model.name,
+                                    fontFamily: fontBold,
+                                  ),
+                                  // const SizedBox(height: 4),
+                                  text(
+                                    widget.model.nameArab,
+                                    fontFamily: fontLight,
+                                    fontSize: textSizeSMedium,
+                                  ),
+                                  text(
+                                    widget.model.price + ' DA',
+                                    textColor: colorAccentGreen,
+                                    fontFamily: fontBold,
+                                    fontSize: textSizeSMedium,
+                                  ),
+                                ]),
+                          ))),
+                  Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.only(right: 12.0),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    setItems(widget.model);
+                                  });
+                                  // launchScreen(context, '/ItemsCart');
+                                },
+                                child: Container(
+                                  height: 30,
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: const BoxDecoration(
+                                    color: colorAccentGreen,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                  ),
+                                  child: Center(
+                                    child: text(
+                                      'Add to cart',
+                                      textColor: Colors.white,
+                                      fontSize: textSizeSmall,
+                                      isCentered: true,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            )),
-                      ],
-                    )),
-              ],
-            ),
-          )),
-    ),
-  );
+                              )),
+                        ],
+                      )),
+                ],
+              ),
+            )),
+      ),
+    );
+  }
 }
+
+// Widget itemCard(context, model) {
+//   return Padding(
+//     padding: const EdgeInsets.only(bottom: 20),
+//     child: GestureDetector(
+//       onTap: () {
+//         Navigator.push(context,
+//             MaterialPageRoute(builder: (context) => ItemDetails(model)));
+//       },
+//       // () => launchScreen(context, ItemDetails.tag, arguments: model),
+//       child: Container(
+//           height: 94,
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(8),
+//           ),
+//           child: Padding(
+//             padding: const EdgeInsets.symmetric(vertical: 10.0),
+//             child: Row(
+//               children: [
+//                 Expanded(
+//                     flex: 2,
+//                     child: SizedBox(
+//                         child: Padding(
+//                       padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
+//                       child: Container(
+//                         // color: Colors.red,
+//                         decoration: BoxDecoration(
+//                             borderRadius:
+//                                 const BorderRadius.all(Radius.circular(10)),
+//                             image: DecorationImage(
+//                               image: AssetImage(model.image),
+//                               fit: BoxFit.fill,
+//                             )),
+//                       ),
+//                     ))),
+//                 Expanded(
+//                     flex: 4,
+//                     child: Container(
+//                         color: Colors.white,
+//                         child: Padding(
+//                           padding: const EdgeInsets.only(left: 10.0),
+//                           child: Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 text(
+//                                   model.name,
+//                                   fontFamily: fontBold,
+//                                 ),
+//                                 // const SizedBox(height: 4),
+//                                 text(
+//                                   model.nameArab,
+//                                   fontFamily: fontLight,
+//                                   fontSize: textSizeSMedium,
+//                                 ),
+//                                 text(
+//                                   model.price + ' DA',
+//                                   textColor: colorAccentGreen,
+//                                   fontFamily: fontBold,
+//                                   fontSize: textSizeSMedium,
+//                                 ),
+//                               ]),
+//                         ))),
+//                 Expanded(
+//                     flex: 3,
+//                     child: Column(
+//                       mainAxisAlignment: MainAxisAlignment.end,
+//                       children: [
+//                         Padding(
+//                             padding: const EdgeInsets.only(right: 12.0),
+//                             child: InkWell(
+//                               onTap: () {
+//                                 setState(() {
+//                                   setItems(widget.model);
+//                                 });
+//                                 launchScreen(context, '/ItemsCart');
+//                               },
+//                               child: Container(
+//                                 height: 30,
+//                                 width: MediaQuery.of(context).size.width,
+//                                 decoration: const BoxDecoration(
+//                                   color: colorAccentGreen,
+//                                   borderRadius:
+//                                       BorderRadius.all(Radius.circular(4)),
+//                                 ),
+//                                 child: Center(
+//                                   child: text(
+//                                     'Add to cart',
+//                                     textColor: Colors.white,
+//                                     fontSize: textSizeSmall,
+//                                     isCentered: true,
+//                                   ),
+//                                 ),
+//                               ),
+//                             )),
+//                       ],
+//                     )),
+//               ],
+//             ),
+//           )),
+//     ),
+//   );
+// }
 
 Widget itemNotFound(context) {
   return Padding(

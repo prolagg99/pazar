@@ -35,12 +35,12 @@ class _HomeState extends State<Home> {
     mSlides = getSlides();
   }
 
-  @override
-  void dispose() {
-    _textEditingController.dispose();
-    _textEditingController.removeListener(() {});
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _textEditingController.dispose();
+  //   _textEditingController.removeListener(() {});
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
