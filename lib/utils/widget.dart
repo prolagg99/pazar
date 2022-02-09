@@ -285,7 +285,7 @@ class _ItemCardState extends State<ItemCard> {
                                     fontSize: textSizeSMedium,
                                   ),
                                   text(
-                                    widget.model.price + ' DA',
+                                    '${widget.model.price} DA',
                                     textColor: colorAccentGreen,
                                     fontFamily: fontBold,
                                     fontSize: textSizeSMedium,
@@ -602,7 +602,7 @@ Widget itemDetailsCard(context, model) {
                                 fontSize: textSizeMLarge),
                             const SizedBox(width: 2),
                             text(
-                              model.price + ' DA',
+                              '${model.price} DA',
                               textColor: colorAccentGreen,
                               fontFamily: fontBold,
                             ),

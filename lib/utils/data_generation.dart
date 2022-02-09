@@ -12,8 +12,8 @@ List<Restaurants> getRestaurantImages() {
 List<Dishes> cartItems = [];
 
 void setItems(model) {
-  cartItems.add(
-      Dishes(category: model.category, image: model.image, price: model.price));
+  cartItems
+      .add(Dishes(name: model.name, image: model.image, price: model.price));
 }
 
 List<Dishes> getItems() {
@@ -28,81 +28,81 @@ List<Dishes> getDishes() {
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_pizza,
       name: 'pizza simple L',
       nameArab: 'L بيتزا عادية',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_burger,
       name: 'burger',
       nameArab: 'تشيز برقر',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_pizza,
       name: 'pizza simple L',
       nameArab: 'L بيتزا عادية',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_burger,
       name: 'burger',
       nameArab: 'تشيز برقر',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_pizza,
       name: 'pizza simple L',
       nameArab: 'L بيتزا عادية',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_burger,
       name: 'burger',
       nameArab: 'تشيز برقر',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       image: img_pizza,
       name: 'pizza simple L',
       nameArab: 'L بيتزا عادية',
-      price: '300.00'));
+      price: 300.00));
   data.add(Dishes(
       category: 'kababji',
       image: img_burger,
       name: 'burger',
       nameArab: 'تشيز برقر',
-      price: '300.00'));
+      price: 300.00));
 
   data.add(Dishes(
       category: 'kababji',
@@ -110,35 +110,35 @@ List<Dishes> getDishes() {
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   data.add(Dishes(
       category: 'kababji',
       categoryArab: 'كبابجي',
       image: img_tacos,
       name: 'tacos poulet L',
       nameArab: 'L طاكوس دجاج',
-      price: '450.00'));
+      price: 450.00));
   return data;
 }
 
