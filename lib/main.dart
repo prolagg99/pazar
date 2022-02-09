@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pazar/screen/bottom_navigation.dart';
+import 'package:pazar/screen/call.dart';
 import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/restaurant_items.dart';
@@ -18,8 +19,9 @@ class Pazar extends StatelessWidget {
       routes: <String, WidgetBuilder>{
         // '/': (context) => const TestScroll(),
         // '/': (context) => const RestaurantDishes2(),
+        // '/': (context) => const ItemCart(),
         '/': (context) => const BottomNavigation(),
-        ItemsCart.tag: (context) => const ItemsCart(),
+        // ItemCart.tag: (context) => const ItemCart(),
         RestaurantItems.tag: (context) => const RestaurantItems(),
       },
     );

@@ -14,8 +14,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   final List _children = const [
     Home(),
-    ItemsCart(),
-    PlaceholderWidget(Colors.green)
+    ItemCart(),
+    // PlaceholderWidget(Colors.green),
+    PlaceholderWidget(Colors.red)
   ];
   void onTabTapped(int index) {
     setState(() {

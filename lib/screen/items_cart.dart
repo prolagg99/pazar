@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:pazar/model/model.dart';
@@ -9,173 +9,189 @@ import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
-class ItemsCart extends StatefulWidget {
-  const ItemsCart({Key? key}) : super(key: key);
+final key = GlobalKey<_ItemsCartAppBarState>();
+
+class ItemCart extends StatefulWidget {
+  const ItemCart({Key? key}) : super(key: key);
   static String tag = '/ItemsCart';
 
   @override
-  _ItemsCartState createState() => _ItemsCartState();
+  State<ItemCart> createState() => _ItemCartState();
 }
 
-class _ItemsCartState extends State<ItemsCart> {
-  double totalWithDelivery = 0.0;
-  // int numb = 1;
-  // // get the price from db !!
-  // double price = 1450.0;
-  // double _totalPrice = 0.0;
+class _ItemCartState extends State<ItemCart> {
   late List<Dishes> _items;
 
   @override
   void initState() {
     super.initState();
     _items = getItems();
-    // _totalPrice = price;
-    // totalWithDelivery = _totalPrice + 200.0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: const Size(0, 184),
+          child: ItemsCartAppBar(
+            key: key,
+            length: _items.length,
+            itemsList: _items,
+          ),
+        ),
+        body: SizedBox(
+            child: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: Scrollbar(
+            child: Container(
+              color: Colors.white,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(0.0),
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  return CartItemsCard(
+                    model: _items[index],
+                    index: index,
+                  );
+                },
+              ),
+            ),
+          ),
+        )));
+  }
+}
+
+class ItemsCartAppBar extends StatefulWidget {
+  int length;
+  List<Dishes> itemsList;
+  ItemsCartAppBar({Key? key, required this.length, required this.itemsList})
+      : super(key: key);
+
+  @override
+  _ItemsCartAppBarState createState() => _ItemsCartAppBarState();
+}
+
+class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
+  double totalWithDelivery = 0.0;
+  double totalWithQntDelivery = 0.0;
+
+  // to calculate the total price after updating the qnt of each item !
+  late List sum;
+
+  @override
+  void initState() {
+    super.initState();
+    sum = List<double>.filled(widget.length, 0);
+    if (widget.length != 0) {
+      totalWithDelivery = 200.0;
+      initialTotalPrice();
+    }
+  }
+
+  void initialTotalPrice() {
+    for (var s in widget.itemsList) {
+      totalWithDelivery = totalWithDelivery + s.price;
+    }
+    totalWithQntDelivery = totalWithDelivery;
+  }
+
+  void calculateTotal() {
+    totalWithDelivery = 0.0;
+    for (var s in sum) {
+      totalWithDelivery = totalWithDelivery + s;
+    }
+    totalWithDelivery = totalWithDelivery + totalWithQntDelivery;
   }
 
   @override
   Widget build(BuildContext context) {
     changeStatusColor(colorAccentGreen);
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: NestedScrollView(
-            floatHeaderSlivers: true,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  expandedHeight: 196,
-                  elevation: 0.0,
-                  pinned: true,
-                  snap: false,
-                  floating: true,
-                  bottom: const PreferredSize(
-                      preferredSize: Size(0, 196), child: Text('')),
-                  flexibleSpace: PreferredSize(
-                    preferredSize: const Size(0, 120), // Add this code
-                    child: Container(
-                      color: colorAccentGreen,
-                      // height: 180,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return SafeArea(
+      child: Container(
+        color: colorAccentGreen,
+        // height: 180,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(color: Colors.red),
+            Row(
+              children: [
+                Flexible(
+                  flex: 2,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Row(),
-                          Row(
-                            children: [
-                              Flexible(
-                                flex: 2,
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        text('total',
-                                            fontSize: textSizeMedium,
-                                            textColor: Colors.white),
-                                        text('${totalWithDelivery}0DA',
-                                            fontFamily: fontBold,
-                                            fontSize: textSizeMedium,
-                                            textColor: Colors.white),
-                                        text('delivery price: 200.00DA',
-                                            textColor: Colors.white,
-                                            fontSize: textSizeSmall,
-                                            textTitleCase: true),
-                                      ]),
-                                ),
-                              ),
-                              const SizedBox(width: 26.0),
-                              Flexible(
-                                flex: 1,
-                                child: SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 44,
-                                          width: 120,
-                                          decoration: BoxDecoration(
-                                              color: colorAccentBlue,
-                                              borderRadius:
-                                                  BorderRadius.circular(08)),
-                                          child: Center(
-                                            child: text('checkout',
-                                                fontFamily: fontBold,
-                                                fontSize: textSizeSMedium,
-                                                textColor: Colors.white),
-                                          ),
-                                        ),
-                                      ]),
-                                ),
-                              ),
-                              const SizedBox(width: 26.0),
-                            ],
-                          ),
+                          text('total',
+                              fontSize: textSizeMedium,
+                              textColor: Colors.white),
+                          text('${totalWithDelivery}0DA',
+                              fontFamily: fontBold,
+                              fontSize: textSizeMedium,
+                              textColor: Colors.white),
+                          text('delivery price: 200.00DA',
+                              textColor: Colors.white,
+                              fontSize: textSizeSmall,
+                              textTitleCase: true),
+                        ]),
+                  ),
+                ),
+                const SizedBox(width: 26.0),
+                Flexible(
+                  flex: 1,
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
                           Container(
-                            height: 80,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: const BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.white,
-                                    blurRadius: 0.0,
-                                    spreadRadius: 0.0,
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(26.0),
-                                  topRight: Radius.circular(26.0),
-                                )),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                text('cart items',
-                                    fontFamily: fontBold,
-                                    textColor: colorAccentGreen,
-                                    textTitleCase: true),
-                                const SizedBox(
-                                  height: 2.0,
-                                ),
-                                text('swip left to remove items from list',
-                                    fontFamily: fontLight,
-                                    fontSize: textSizeSMedium,
-                                    textColor: Colors.grey[600]),
-                              ],
+                            height: 44,
+                            width: 120,
+                            decoration: BoxDecoration(
+                                color: colorAccentBlue,
+                                borderRadius: BorderRadius.circular(08)),
+                            child: Center(
+                              child: text('checkout',
+                                  fontFamily: fontBold,
+                                  fontSize: textSizeSMedium,
+                                  textColor: Colors.white),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
+                        ]),
                   ),
                 ),
-              ];
-            },
-            body:
-                // the scrolling getItems List !
-                ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: Scrollbar(
-                child: Container(
+                const SizedBox(width: 26.0),
+              ],
+            ),
+            Container(
+              height: 68,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
                   color: Colors.white,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(0.0),
-                    itemCount: _items.length,
-                    itemBuilder: (context, index) {
-                      return CartItemsCard(model: _items[index]);
-                    },
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(26.0),
+                    topRight: Radius.circular(26.0),
+                  )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  text('cart items',
+                      fontFamily: fontBold,
+                      textColor: colorAccentGreen,
+                      textTitleCase: true),
+                  const SizedBox(
+                    height: 2.0,
                   ),
-                ),
+                  text('swip left to remove items from list',
+                      fontFamily: fontLight,
+                      fontSize: textSizeSMedium,
+                      textColor: Colors.grey[600]),
+                ],
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -183,19 +199,20 @@ class _ItemsCartState extends State<ItemsCart> {
 }
 
 class CartItemsCard extends StatefulWidget {
-  // const CartItemsCard({Key? key}) : super(key: key);
-
   Dishes model;
-  CartItemsCard({Key? key, required this.model}) : super(key: key);
+  int index;
+  CartItemsCard({
+    Key? key,
+    required this.model,
+    required this.index,
+  }) : super(key: key);
 
   @override
   _CartItemsCardState createState() => _CartItemsCardState();
 }
 
 class _CartItemsCardState extends State<CartItemsCard> {
-  double totalWithDelivery = 0.0;
   int qnt = 1;
-  // get the price from db !!
   double _itemPrice = 0.0;
   double _totalPrice = 0.0;
 
@@ -204,7 +221,10 @@ class _CartItemsCardState extends State<CartItemsCard> {
     super.initState();
     _itemPrice = widget.model.price;
     _totalPrice = _itemPrice;
-    totalWithDelivery = _totalPrice + 200.0;
+
+    // key.currentState!.sum[widget.index] = _totalPrice;
+    // // key.currentState!.totalWithDelivery = 0;
+    // key.currentState!.calculateTotal();
   }
 
   @override
@@ -276,11 +296,12 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                           qnt -= 1;
                                           _totalPrice =
                                               _totalPrice - _itemPrice;
-                                          if (totalWithDelivery == 200.0) {
-                                            totalWithDelivery = 0.0;
-                                          } else {
-                                            totalWithDelivery = _totalPrice;
-                                          }
+                                          key.currentState!.setState(() {
+                                            key.currentState!
+                                                    .sum[widget.index] =
+                                                _totalPrice - _itemPrice;
+                                            key.currentState!.calculateTotal();
+                                          });
                                         }
                                       });
                                     },
@@ -301,12 +322,11 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                         setState(() {
                                           qnt += 1;
                                           _totalPrice = _itemPrice * qnt;
-                                          if (totalWithDelivery == 0.0) {
-                                            totalWithDelivery =
-                                                _totalPrice + 200.0;
-                                          } else {
-                                            totalWithDelivery = _totalPrice;
-                                          }
+                                        });
+                                        key.currentState!.setState(() {
+                                          key.currentState!.sum[widget.index] =
+                                              _totalPrice - _itemPrice;
+                                          key.currentState!.calculateTotal();
                                         });
                                       },
                                       child: SizedBox(
