@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, avoid_print, import_of_legacy_library_into_null_safe, deprecated_member_use
+// ignore_for_file: must_be_immutable, avoid_print, import_of_legacy_library_into_null_safe, deprecated_member_use, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -22,12 +22,12 @@ class ItemCart extends StatefulWidget {
 }
 
 class _ItemCartState extends State<ItemCart> {
-  late List<Dishes> _items;
+  // late List<Dishes> _items;
 
   @override
   void initState() {
     super.initState();
-    _items = getItems();
+    // _items = getItems();
   }
 
   @override
@@ -38,8 +38,8 @@ class _ItemCartState extends State<ItemCart> {
           preferredSize: const Size(0, 184),
           child: ItemsCartAppBar(
             key: key,
-            length: _items.length,
-            itemsList: _items,
+            length: items.length,
+            itemsList: items,
           ),
         ),
         body: SizedBox(
@@ -50,10 +50,10 @@ class _ItemCartState extends State<ItemCart> {
               color: Colors.white,
               child: ListView.builder(
                 padding: const EdgeInsets.all(0.0),
-                itemCount: _items.length,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
                   return CartItemsCard(
-                    model: _items[index],
+                    model: items[index],
                     index: index,
                   );
                 },
@@ -85,13 +85,17 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
   void initState() {
     super.initState();
     sum = List<double>.filled(widget.length, 0);
-    if (widget.length != 0) {
-      totalWithDelivery = 200.0;
-      initialTotalPrice();
-    }
+    // if (widget.length != 0) {
+    //   totalWithDelivery = 200.0;
+    //   initialTotalPrice();
+    // }
+    initialTotalPrice();
   }
 
   void initialTotalPrice() {
+    if (widget.length != 0) {
+      totalWithDelivery = 200.0;
+    }
     for (var s in widget.itemsList) {
       totalWithDelivery = totalWithDelivery + s.price;
     }
@@ -236,16 +240,22 @@ class _CartItemsCardState extends State<CartItemsCard> {
         dismissal: SlidableDismissal(
           child: const SlidableDrawerDismissal(),
           onDismissed: (actionType) {
-            // _showSnackBar(
-            //     context,
-            //     actionType == SlideActionType.primary
-            //         ? 'Dismiss Archive'
-            //         : 'Dimiss Delete');
+            items.removeWhere((element) {
+              return element.name == widget.model.name;
+            });
             // setState(() {
             // items.removeAt(widget.index);
             // });
-            items.removeWhere((element) {
-              return element.name == widget.model.name;
+            key.currentState!.setState(() {
+              items.isNotEmpty
+                  ? key.currentState!.totalWithDelivery =
+                      key.currentState!.totalWithDelivery -
+                          (key.currentState!.sum[widget.index] + _itemPrice)
+                  : key.currentState!.totalWithDelivery = 00.0;
+              // the problem is here !! -> the problem fixid
+              print(items.length);
+              print(widget.model.name);
+              // dont forget to update the value of sum tab !
             });
           },
         ),
