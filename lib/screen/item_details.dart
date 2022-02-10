@@ -20,6 +20,8 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
+  bool isClicked = false;
+
   @override
   Widget build(BuildContext context) {
     changeStatusColor(colorAccentGreen);
@@ -37,6 +39,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             InkWell(
               onTap: () {
                 setState(() {
+                  isClicked = true;
                   setItems(widget.model);
                 });
                 // launchScreen(context, '/ItemsCart');
@@ -45,7 +48,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   height: 55,
                   width: 220,
                   decoration: BoxDecoration(
-                    color: colorAccentGreen,
+                    color: isClicked ? Colors.grey[400] : colorAccentGreen,
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: Align(

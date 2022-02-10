@@ -38,6 +38,7 @@ dependencies:
   flappy_search_bar: ^1.7.2
   carousel_slider: ^4.0.0
   flutter_svg: ^1.0.0
+  flutter_slidable: ^0.5.4
   
 dev_dependencies:
   flutter_test:

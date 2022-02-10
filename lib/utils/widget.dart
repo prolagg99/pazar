@@ -226,6 +226,8 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
+  bool isClicked = false;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -237,7 +239,6 @@ class _ItemCardState extends State<ItemCard> {
               MaterialPageRoute(
                   builder: (context) => ItemDetails(widget.model)));
         },
-        // () => launchScreen(context, ItemDetails.tag, arguments: model),
         child: Container(
             height: 94,
             decoration: BoxDecoration(
@@ -302,17 +303,19 @@ class _ItemCardState extends State<ItemCard> {
                               child: InkWell(
                                 onTap: () {
                                   setState(() {
+                                    isClicked = true;
                                     setItems(widget.model);
                                   });
-                                  // launchScreen(context, '/ItemsCart');
                                 },
                                 child: Container(
                                   height: 30,
                                   width: MediaQuery.of(context).size.width,
-                                  decoration: const BoxDecoration(
-                                    color: colorAccentGreen,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
+                                  decoration: BoxDecoration(
+                                    color: isClicked
+                                        ? Colors.grey[400]
+                                        : colorAccentGreen,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(4)),
                                   ),
                                   child: Center(
                                     child: text(

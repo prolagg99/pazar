@@ -1,6 +1,7 @@
-// ignore_for_file: must_be_immutable, avoid_print
+// ignore_for_file: must_be_immutable, avoid_print, import_of_legacy_library_into_null_safe, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -10,6 +11,7 @@ import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
 final key = GlobalKey<_ItemsCartAppBarState>();
+final List<Dishes> items = getItems();
 
 class ItemCart extends StatefulWidget {
   const ItemCart({Key? key}) : super(key: key);
@@ -221,133 +223,178 @@ class _CartItemsCardState extends State<CartItemsCard> {
     super.initState();
     _itemPrice = widget.model.price;
     _totalPrice = _itemPrice;
-
-    // key.currentState!.sum[widget.index] = _totalPrice;
-    // // key.currentState!.totalWithDelivery = 0;
-    // key.currentState!.calculateTotal();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Container(
-        color: Colors.white,
-        height: 80.0,
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 66.0,
-                          width: 58.0,
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              image: DecorationImage(
-                                image: AssetImage(img_tacos),
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                        const SizedBox(width: 10.0),
-                        Container(
-                            child: text(widget.model.name,
-                                fontSize: textSizeSMedium)),
-                        const SizedBox(width: 10.0),
-                      ],
+      child: Slidable(
+        key: UniqueKey(),
+        actionPane: const SlidableDrawerActionPane(),
+        actionExtentRatio: 0.33,
+        dismissal: SlidableDismissal(
+          child: const SlidableDrawerDismissal(),
+          onDismissed: (actionType) {
+            // _showSnackBar(
+            //     context,
+            //     actionType == SlideActionType.primary
+            //         ? 'Dismiss Archive'
+            //         : 'Dimiss Delete');
+            // setState(() {
+            // items.removeAt(widget.index);
+            // });
+            items.removeWhere((element) {
+              return element.name == widget.model.name;
+            });
+          },
+        ),
+        child: Container(
+          color: Colors.white,
+          height: 80.0,
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 5,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 66.0,
+                            width: 58.0,
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                image: DecorationImage(
+                                  image: AssetImage(img_tacos),
+                                  fit: BoxFit.fill,
+                                )),
+                          ),
+                          const SizedBox(width: 10.0),
+                          Container(
+                              child: text(widget.model.name,
+                                  fontSize: textSizeSMedium)),
+                          const SizedBox(width: 10.0),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-              flex: 3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 12.0),
-                    child: Row(
-                      children: [
-                        Container(
-                            height: 32.0,
-                            width: 56.0,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(26)),
-                              border: Border.all(width: 0.5),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (qnt > 1) {
-                                          qnt -= 1;
-                                          _totalPrice =
-                                              _totalPrice - _itemPrice;
+              Expanded(
+                flex: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12.0),
+                      child: Row(
+                        children: [
+                          Container(
+                              height: 32.0,
+                              width: 58.0,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(26)),
+                                border: Border.all(width: 0.5),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          if (qnt > 1) {
+                                            qnt -= 1;
+                                            _totalPrice =
+                                                _totalPrice - _itemPrice;
+                                            key.currentState!.setState(() {
+                                              key.currentState!
+                                                      .sum[widget.index] =
+                                                  _totalPrice - _itemPrice;
+                                              key.currentState!
+                                                  .calculateTotal();
+                                            });
+                                          }
+                                        });
+                                      },
+                                      child: SizedBox(
+                                          child: Center(child: text('-'))),
+                                    ),
+                                  ),
+                                  Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: text('$qnt',
+                                            fontSize: textSizeSMedium),
+                                      )),
+                                  Expanded(
+                                      flex: 2,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            qnt += 1;
+                                            _totalPrice = _itemPrice * qnt;
+                                          });
                                           key.currentState!.setState(() {
                                             key.currentState!
                                                     .sum[widget.index] =
                                                 _totalPrice - _itemPrice;
                                             key.currentState!.calculateTotal();
                                           });
-                                        }
-                                      });
-                                    },
-                                    child: SizedBox(
-                                        child: Center(child: text('-'))),
-                                  ),
-                                ),
-                                Expanded(
-                                    flex: 2,
-                                    child: Center(
-                                      child: text('$qnt',
-                                          fontSize: textSizeSMedium),
-                                    )),
-                                Expanded(
-                                    flex: 2,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        setState(() {
-                                          qnt += 1;
-                                          _totalPrice = _itemPrice * qnt;
-                                        });
-                                        key.currentState!.setState(() {
-                                          key.currentState!.sum[widget.index] =
-                                              _totalPrice - _itemPrice;
-                                          key.currentState!.calculateTotal();
-                                        });
-                                      },
-                                      child: SizedBox(
-                                          child: Center(child: text('+'))),
-                                    )),
-                              ],
-                            )),
-                        const SizedBox(width: 3.0),
-                        text('X', fontSize: 9.0),
-                        const SizedBox(width: 3.0),
-                        text('${_totalPrice}0DA',
-                            textColor: colorAccentGreen,
-                            fontSize: textSizeSMedium),
-                      ],
+                                        },
+                                        child: SizedBox(
+                                            child: Center(child: text('+'))),
+                                      )),
+                                ],
+                              )),
+                          const SizedBox(width: 3.0),
+                          text('X', fontSize: 9.0),
+                          const SizedBox(width: 3.0),
+                          Flexible(
+                            child: text('${_totalPrice}0DA',
+                                textColor: colorAccentGreen,
+                                fontSize: textSizeSMedium),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        secondaryActions: <Widget>[
+          SlideAction(
+            onTap: () async {},
+            child: Container(
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(04),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.delete, color: Colors.white),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    text(
+                      'delete',
+                      textColor: Colors.white,
+                    )
+                  ],
+                )),
+          ),
+        ],
       ),
     );
   }

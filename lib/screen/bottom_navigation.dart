@@ -15,8 +15,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final List _children = const [
     Home(),
     ItemCart(),
-    // PlaceholderWidget(Colors.green),
-    PlaceholderWidget(Colors.red)
+    PlaceholderWidget(color: Colors.red)
   ];
   void onTabTapped(int index) {
     setState(() {
@@ -76,8 +75,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
 class PlaceholderWidget extends StatelessWidget {
   final Color color;
-
-  const PlaceholderWidget(this.color);
+  const PlaceholderWidget({Key? key, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
