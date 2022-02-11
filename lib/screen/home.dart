@@ -104,21 +104,33 @@ class _HomeState extends State<Home> {
                                     color: Colors.grey,
                                     height: 1.8),
                                 textAlignVertical: TextAlignVertical.center,
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
+                                    suffixIcon: _textEditingController
+                                            .text.isNotEmpty
+                                        ? IconButton(
+                                            onPressed: () {
+                                              _textEditingController.clear();
+                                              setState(() {});
+                                            },
+                                            icon: const Icon(Icons.clear,
+                                                color: Colors.grey, size: 20),
+                                          )
+                                        : const SizedBox(),
                                     filled: true,
-                                    prefixIcon: Icon(
+                                    prefixIcon: const Icon(
                                       Icons.search,
                                       color: Colors.grey,
                                       size: 20,
                                     ),
-                                    border: OutlineInputBorder(
+                                    border: const OutlineInputBorder(
                                         borderSide: BorderSide.none,
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(6))),
                                     fillColor: colorAccentGrey,
                                     contentPadding: EdgeInsets.zero,
                                     hintText: 'search',
-                                    hintStyle: TextStyle(color: Colors.grey)),
+                                    hintStyle:
+                                        const TextStyle(color: Colors.grey)),
                               ),
                             )
                           ],

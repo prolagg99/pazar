@@ -312,7 +312,7 @@ class _ItemCardState extends State<ItemCard> {
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
                                     color: isClicked
-                                        ? Colors.grey[400]
+                                        ? colorAccentGreyBtn
                                         : colorAccentGreen,
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(4)),
@@ -338,19 +338,21 @@ class _ItemCardState extends State<ItemCard> {
 }
 
 Widget itemNotFound(context) {
-  return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 150.0),
-      child: Column(
-        children: [
-          Icon(Icons.warning_amber_rounded, size: 44, color: Colors.grey[400]),
-          const SizedBox(height: 6),
-          text(
-            'No item found ...',
-            fontFamily: fontLight,
-            fontSize: textSizeMLarge,
-          ),
-        ],
-      ));
+  return SingleChildScrollView(
+      child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 150.0),
+          child: Column(
+            children: [
+              const Icon(Icons.warning_amber_rounded,
+                  size: 44, color: colorAccentGreyBtn),
+              const SizedBox(height: 6),
+              text(
+                'No item found ...',
+                fontFamily: fontLight,
+                fontSize: textSizeMLarge,
+              ),
+            ],
+          )));
 }
 
 Widget itemDetailsCard(context, model) {

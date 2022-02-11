@@ -7,7 +7,6 @@ import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
-import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
 final key = GlobalKey<_ItemsCartAppBarState>();
@@ -277,11 +276,11 @@ class _CartItemsCardState extends State<CartItemsCard> {
                           Container(
                             height: 66.0,
                             width: 58.0,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+                                    const BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
-                                  image: AssetImage(img_tacos),
+                                  image: AssetImage(widget.model.image),
                                   fit: BoxFit.fill,
                                 )),
                           ),

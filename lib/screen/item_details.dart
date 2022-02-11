@@ -36,19 +36,19 @@ class _ItemDetailsState extends State<ItemDetails> {
                   height: MediaQuery.of(context).size.height * 0.56,
                   child: itemDetailsCard(context, widget.model)),
             ),
-            InkWell(
+            GestureDetector(
               onTap: () {
                 setState(() {
                   isClicked = true;
                   setItems(widget.model);
                 });
-                // launchScreen(context, '/ItemsCart');
+                back(context);
               },
               child: Container(
                   height: 55,
                   width: 220,
                   decoration: BoxDecoration(
-                    color: isClicked ? Colors.grey[400] : colorAccentGreen,
+                    color: isClicked ? colorAccentGreyBtn : colorAccentGreen,
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: Align(
