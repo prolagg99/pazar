@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/items_cart.dart';
+import 'package:pazar/screen/profile.dart';
 import 'package:pazar/utils/colors.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -15,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   final List _children = const [
     Home(),
     ItemCart(),
-    PlaceholderWidget(color: Colors.red)
+    Profile(),
   ];
   void onTabTapped(int index) {
     setState(() {
