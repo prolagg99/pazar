@@ -12,8 +12,7 @@ List<Restaurants> getRestaurantImages() {
 List<Dishes> cartItems = [];
 
 void setItems(model) {
-  cartItems
-      .add(Dishes(name: model.name, image: model.image, price: model.price));
+  cartItems.add(model);
 }
 
 List<Dishes> getItems() {

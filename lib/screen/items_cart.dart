@@ -2,15 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pazar/model/cart_model.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
-import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
-
-final key = GlobalKey<_ItemsCartAppBarState>();
-final List<Dishes> items = getItems();
+import 'package:provider/provider.dart';
 
 class ItemCart extends StatefulWidget {
   const ItemCart({Key? key}) : super(key: key);
@@ -21,101 +19,61 @@ class ItemCart extends StatefulWidget {
 }
 
 class _ItemCartState extends State<ItemCart> {
-  // late List<Dishes> _items;
-
   @override
   void initState() {
     super.initState();
-    // _items = getItems();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-          preferredSize: const Size(0, 184),
-          child: ItemsCartAppBar(
-            key: key,
-            length: items.length,
-            itemsList: items,
+    return Consumer<CartModel>(builder: (context, cart, child) {
+      return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(
+            preferredSize: const Size(0, 184),
+            child: ItemsCartAppBar(cartModel: cart),
           ),
-        ),
-        body: SizedBox(
+          body: SizedBox(
             child: ScrollConfiguration(
-          behavior: MyBehavior(),
-          child: Scrollbar(
-            child: Container(
-              color: Colors.white,
-              child: ListView.builder(
-                padding: const EdgeInsets.all(0.0),
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return CartItemsCard(
-                    model: items[index],
-                    index: index,
-                  );
-                },
+              behavior: MyBehavior(),
+              child: Scrollbar(
+                child: Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(0.0),
+                    itemCount: cart.items.length,
+                    itemBuilder: (context, index) {
+                      return CartItemsCard(
+                        model: cart.items[index],
+                        index: index,
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        )));
+          ));
+    });
   }
 }
 
 class ItemsCartAppBar extends StatefulWidget {
-  int length;
-  List<Dishes> itemsList;
-  ItemsCartAppBar({Key? key, required this.length, required this.itemsList})
-      : super(key: key);
+  CartModel cartModel;
 
+  ItemsCartAppBar({Key? key, required this.cartModel}) : super(key: key);
   @override
   _ItemsCartAppBarState createState() => _ItemsCartAppBarState();
 }
 
 class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
-  double totalWithDelivery = 0.0;
-  double totalWithQntDelivery = 0.0;
-
-  // to calculate the total price after updating the qnt of each item !
-  late List sum;
-
-  @override
-  void initState() {
-    super.initState();
-    sum = List<double>.filled(widget.length, 0);
-    // if (widget.length != 0) {
-    //   totalWithDelivery = 200.0;
-    //   initialTotalPrice();
-    // }
-    initialTotalPrice();
-  }
-
-  void initialTotalPrice() {
-    if (widget.length != 0) {
-      totalWithDelivery = 200.0;
-    }
-    for (var s in widget.itemsList) {
-      totalWithDelivery = totalWithDelivery + s.price;
-    }
-    totalWithQntDelivery = totalWithDelivery;
-  }
-
-  void calculateTotal() {
-    totalWithDelivery = 0.0;
-    for (var s in sum) {
-      totalWithDelivery = totalWithDelivery + s;
-    }
-    totalWithDelivery = totalWithDelivery + totalWithQntDelivery;
-  }
-
   @override
   Widget build(BuildContext context) {
+    // CartModel cartModel = Provider.of<CartModel>(context, listen: false);
+
     changeStatusColor(colorAccentGreen);
     return SafeArea(
       child: Container(
         color: colorAccentGreen,
-        // height: 180,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -132,7 +90,7 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                           text('total',
                               fontSize: textSizeMedium,
                               textColor: Colors.white),
-                          text('${totalWithDelivery}0DA',
+                          text('${widget.cartModel.totalPrice}0DA',
                               fontFamily: fontBold,
                               fontSize: textSizeMedium,
                               textColor: Colors.white),
@@ -230,6 +188,8 @@ class _CartItemsCardState extends State<CartItemsCard> {
 
   @override
   Widget build(BuildContext context) {
+    CartModel cartModel = Provider.of<CartModel>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Slidable(
@@ -239,23 +199,8 @@ class _CartItemsCardState extends State<CartItemsCard> {
         dismissal: SlidableDismissal(
           child: const SlidableDrawerDismissal(),
           onDismissed: (actionType) {
-            items.removeWhere((element) {
-              return element.name == widget.model.name;
-            });
-            // setState(() {
-            // items.removeAt(widget.index);
-            // });
-            key.currentState!.setState(() {
-              items.isNotEmpty
-                  ? key.currentState!.totalWithDelivery =
-                      key.currentState!.totalWithDelivery -
-                          (key.currentState!.sum[widget.index] + _itemPrice)
-                  : key.currentState!.totalWithDelivery = 00.0;
-              // the problem is here !! -> the problem fixid
-              print(items.length);
-              print(widget.model.name);
-              // dont forget to update the value of sum tab !
-            });
+            cartModel.remove(widget.index);
+            print(cartModel.items.length);
           },
         ),
         child: Container(
@@ -318,20 +263,19 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                     flex: 2,
                                     child: GestureDetector(
                                       onTap: () {
-                                        setState(() {
-                                          if (qnt > 1) {
+                                        if (qnt > 1) {
+                                          setState(() {
                                             qnt -= 1;
                                             _totalPrice =
                                                 _totalPrice - _itemPrice;
-                                            key.currentState!.setState(() {
-                                              key.currentState!
-                                                      .sum[widget.index] =
-                                                  _totalPrice - _itemPrice;
-                                              key.currentState!
-                                                  .calculateTotal();
-                                            });
-                                          }
-                                        });
+                                          });
+                                          // the new methode :
+                                          cartModel.updateItemQnt(
+                                              widget.index, qnt, _totalPrice);
+                                          print(widget.model.price);
+                                          print(widget.model.qnt);
+                                          print(cartModel.totalPrice);
+                                        }
                                       },
                                       child: SizedBox(
                                           child: Center(child: text('-'))),
@@ -340,23 +284,25 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                   Expanded(
                                       flex: 2,
                                       child: Center(
-                                        child: text('$qnt',
+                                          child: Text(
+                                        '${widget.model.qnt}',
+                                        style: const TextStyle(
                                             fontSize: textSizeSMedium),
-                                      )),
+                                      ))),
                                   Expanded(
                                       flex: 2,
                                       child: GestureDetector(
                                         onTap: () {
                                           setState(() {
                                             qnt += 1;
-                                            _totalPrice = _itemPrice * qnt;
+                                            _totalPrice += _itemPrice;
                                           });
-                                          key.currentState!.setState(() {
-                                            key.currentState!
-                                                    .sum[widget.index] =
-                                                _totalPrice - _itemPrice;
-                                            key.currentState!.calculateTotal();
-                                          });
+                                          // the new methode :
+                                          cartModel.updateItemQnt(
+                                              widget.index, qnt, _totalPrice);
+                                          print(widget.model.price);
+                                          print(widget.model.qnt);
+                                          print(cartModel.totalPrice);
                                         },
                                         child: SizedBox(
                                             child: Center(child: text('+'))),
@@ -367,7 +313,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                           text('X', fontSize: 9.0),
                           const SizedBox(width: 3.0),
                           Flexible(
-                            child: text('${_totalPrice}0DA',
+                            child: text('${widget.model.price}0DA',
                                 textColor: colorAccentGreen,
                                 fontSize: textSizeSMedium),
                           ),

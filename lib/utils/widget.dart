@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:pazar/model/cart_model.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/item_details.dart';
 import 'package:pazar/utils/colors.dart';
@@ -10,6 +11,7 @@ import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
+import 'package:provider/provider.dart';
 
 class MyBehavior extends ScrollBehavior {
   @override
@@ -227,9 +229,12 @@ class ItemCard extends StatefulWidget {
 
 class _ItemCardState extends State<ItemCard> {
   bool isClicked = false;
+  // final cart = CartModel();
 
   @override
   Widget build(BuildContext context) {
+    CartModel cartModel = Provider.of<CartModel>(context, listen: false);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: GestureDetector(
@@ -302,10 +307,14 @@ class _ItemCardState extends State<ItemCard> {
                               padding: const EdgeInsets.only(right: 12.0),
                               child: InkWell(
                                 onTap: () {
-                                  setState(() {
-                                    isClicked = true;
-                                    setItems(widget.model);
-                                  });
+                                  cartModel.addItem(widget.model);
+                                  // cart.addItem(widget.model);
+                                  print(cartModel.items.length);
+
+                                  // setState(() {
+                                  //   isClicked = true;
+                                  //   setItems(widget.model);
+                                  // });
                                 },
                                 child: Container(
                                   height: 30,

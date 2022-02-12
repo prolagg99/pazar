@@ -17,11 +17,14 @@ class Dishes {
   var name;
   var nameArab;
   var price;
-  Dishes(
-      {this.category,
-      this.categoryArab,
-      this.image,
-      this.name,
-      this.nameArab,
-      this.price});
+  var qnt;
+  Dishes({
+    this.category,
+    this.categoryArab,
+    this.image,
+    this.name,
+    this.nameArab,
+    this.price,
+    this.qnt = 1,
+  });
 }
