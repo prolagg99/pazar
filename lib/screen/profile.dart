@@ -6,6 +6,7 @@ import 'package:pazar/utils/widget.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
+  static String tag = '/Profile';
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -33,19 +34,7 @@ class _ProfileState extends State<Profile> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // const SizedBox(
-                      //   height: 42,
-                      //   width: 42,
-                      //   child: Align(
-                      //     alignment: Alignment.centerRight,
-                      //     child: CircleAvatar(
-                      //       backgroundColor: colorAccentGreen,
-                      //       child: Text('IL'),
-                      //     ),
-                      //   ),
-                      // ),
                       Container(
                         height: 48,
                         width: 48,
@@ -56,7 +45,6 @@ class _ProfileState extends State<Profile> {
                         child: const Icon(Icons.person, color: Colors.white),
                         alignment: Alignment.center,
                       ),
-                      // const Icon(Icons.person),
                       const SizedBox(width: 10),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -88,7 +76,6 @@ class _ProfileState extends State<Profile> {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text('total points : 0',
                               fontFamily: fontBold,
@@ -118,7 +105,6 @@ class _ProfileState extends State<Profile> {
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 18),
@@ -132,7 +118,6 @@ class _ProfileState extends State<Profile> {
                                 const SizedBox(width: 10),
                                 SizedBox(
                                   width: 168,
-                                  // color: Colors.blue,
                                   child: text('rate us',
                                       fontFamily: fontBold,
                                       textColor: Colors.grey[800],
@@ -159,10 +144,8 @@ class _ProfileState extends State<Profile> {
                                 const SizedBox(width: 10),
                                 SizedBox(
                                   width: 168,
-                                  // color: Colors.blue,
                                   child: text('languages',
                                       fontFamily: fontBold,
-                                      // fontSize: textSizeNormal,
                                       textColor: Colors.grey[800],
                                       textTitleCase: true),
                                 ),
@@ -196,10 +179,8 @@ class _ProfileState extends State<Profile> {
                                 const SizedBox(width: 10),
                                 SizedBox(
                                   width: 168,
-                                  // color: Colors.blue,
                                   child: text('new version',
                                       fontFamily: fontBold,
-                                      // fontSize: textSizeNormal,
                                       textColor: Colors.grey[800],
                                       textTitleCase: true),
                                 ),
@@ -231,9 +212,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-            Container(
-                // color: Colors.red,
-                height: MediaQuery.of(context).size.width * 0.38),
+            Container(height: MediaQuery.of(context).size.width * 0.38),
           ],
         ),
       )),

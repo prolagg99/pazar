@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:pazar/model/cart.dart';
 import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/profile.dart';
 import 'package:pazar/utils/colors.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -26,31 +28,35 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: _children[_currentIndex], // new
-        bottomNavigationBar: Container(
-          height: 60,
-          decoration: const BoxDecoration(
-              border: Border(top: BorderSide(width: 0.1, color: Colors.grey))),
-          child: Theme(
-            data: Theme.of(context).copyWith(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
+    return ChangeNotifierProvider(
+      create: (context) => CartModel(),
+      child: Scaffold(
+          body: _children[_currentIndex], // new
+          bottomNavigationBar: Container(
+            height: 60,
+            decoration: const BoxDecoration(
+                border:
+                    Border(top: BorderSide(width: 0.1, color: Colors.grey))),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: BottomNavigationBar(
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                onTap: onTabTapped,
+                currentIndex: _currentIndex,
+                items: [
+                  bottomNavigationBarItem(Icons.home_outlined, Icons.home),
+                  bottomNavigationBarItem(
+                      Icons.shopping_cart_outlined, Icons.shopping_cart),
+                  bottomNavigationBarItem(Icons.person_outline, Icons.person),
+                ],
+              ),
             ),
-            child: BottomNavigationBar(
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              onTap: onTabTapped,
-              currentIndex: _currentIndex,
-              items: [
-                bottomNavigationBarItem(Icons.home_outlined, Icons.home),
-                bottomNavigationBarItem(
-                    Icons.shopping_cart_outlined, Icons.shopping_cart),
-                bottomNavigationBarItem(Icons.person_outline, Icons.person),
-              ],
-            ),
-          ),
-        ));
+          )),
+    );
   }
 }
 

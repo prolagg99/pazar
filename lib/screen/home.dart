@@ -4,9 +4,9 @@ import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/restaurant_items.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
-import 'package:pazar/utils/data_generation.dart';
-import 'package:pazar/utils/extension.dart';
+import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/widget.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,8 +21,7 @@ class _HomeState extends State<Home> {
   static var formKey = GlobalKey<FormState>();
 
   List<Restaurants> mRestaurants = [];
-  List<Dishes> dishesListOnSearch = [];
-  List<Dishes> _mDishes = [];
+  List<Item> dishesListOnSearch = [];
   List<Slides> mSlides = [];
   late Restaurants lastItem;
 
@@ -31,19 +30,13 @@ class _HomeState extends State<Home> {
     super.initState();
     mRestaurants = getRestaurantImages();
     lastItem = mRestaurants[mRestaurants.length - 1];
-    _mDishes = getDishes();
     mSlides = getSlides();
   }
 
-  // @override
-  // void dispose() {
-  //   _textEditingController.dispose();
-  //   _textEditingController.removeListener(() {});
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
+    var catalog = context.watch<CatalogModel>();
+
     return Scaffold(
       backgroundColor: colorPrimary,
       resizeToAvoidBottomInset: false,
@@ -90,8 +83,8 @@ class _HomeState extends State<Home> {
                                 controller: _textEditingController,
                                 onChanged: (value) {
                                   setState(() {
-                                    dishesListOnSearch = _mDishes
-                                        .where((element) => element.name!
+                                    dishesListOnSearch = catalog.catalogItems
+                                        .where((element) => element.name
                                             .toLowerCase()
                                             .contains(value.toLowerCase()))
                                         .toList();
@@ -173,8 +166,13 @@ class _HomeState extends State<Home> {
                                           MediaQuery.of(context).size.height *
                                               0.20,
                                       child: GestureDetector(
-                                        onTap: () => launchScreen(
-                                            context, RestaurantItems.tag),
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return const RestaurantItems();
+                                          }));
+                                        },
                                         child: restaurantListView(
                                             mRestaurants, lastItem),
                                       )),
@@ -184,8 +182,18 @@ class _HomeState extends State<Home> {
                                       'all items with best items list'),
                                 ),
                                 Flexible(
-                                  child:
-                                      SizedBox(child: itemListView(_mDishes)),
+                                  child: SizedBox(
+                                      child: ListView.builder(
+                                          shrinkWrap: true,
+                                          padding: const EdgeInsets.all(0.0),
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount:
+                                              catalog.catalogItems.length,
+                                          itemBuilder: (context, index) {
+                                            return ItemCard(
+                                                catalog.catalogItems[index]);
+                                          })),
                                 )
                               ],
                             ),

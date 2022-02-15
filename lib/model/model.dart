@@ -9,22 +9,3 @@ class Restaurants {
   var image;
   Restaurants({this.image});
 }
-
-class Dishes {
-  var category;
-  var categoryArab;
-  var image;
-  var name;
-  var nameArab;
-  var price;
-  var qnt;
-  Dishes({
-    this.category,
-    this.categoryArab,
-    this.image,
-    this.name,
-    this.nameArab,
-    this.price,
-    this.qnt = 1,
-  });
-}

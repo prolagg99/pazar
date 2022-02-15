@@ -1,14 +1,13 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, avoid_print
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
-import 'package:pazar/model/cart_model.dart';
-import 'package:pazar/model/model.dart';
+import 'package:pazar/model/cart.dart';
+import 'package:pazar/model/catalog.dart';
 import 'package:pazar/screen/item_details.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
-import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 import 'package:provider/provider.dart';
@@ -218,9 +217,7 @@ Widget restaurantCard(context, model, last) {
 }
 
 class ItemCard extends StatefulWidget {
-  // const ItemCard({ Key? key }) : super(key: key);
-
-  final Dishes model;
+  final Item model;
   const ItemCard(this.model);
 
   @override
@@ -228,12 +225,12 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  bool isClicked = false;
-  // final cart = CartModel();
-
   @override
   Widget build(BuildContext context) {
-    CartModel cartModel = Provider.of<CartModel>(context, listen: false);
+    var isInCart = context.select<CartModel, bool>(
+      // Here, we are only interested whether [item] is inside the cart.
+      (cart) => cart.items.contains(widget.model),
+    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -260,7 +257,6 @@ class _ItemCardState extends State<ItemCard> {
                           child: Padding(
                         padding: const EdgeInsets.fromLTRB(14, 0, 6, 0),
                         child: Container(
-                          // color: Colors.red,
                           decoration: BoxDecoration(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
@@ -284,7 +280,6 @@ class _ItemCardState extends State<ItemCard> {
                                     widget.model.name,
                                     fontFamily: fontBold,
                                   ),
-                                  // const SizedBox(height: 4),
                                   text(
                                     widget.model.nameArab,
                                     fontFamily: fontLight,
@@ -306,21 +301,21 @@ class _ItemCardState extends State<ItemCard> {
                           Padding(
                               padding: const EdgeInsets.only(right: 12.0),
                               child: InkWell(
-                                onTap: () {
-                                  cartModel.addItem(widget.model);
-                                  // cart.addItem(widget.model);
-                                  print(cartModel.items.length);
-
-                                  // setState(() {
-                                  //   isClicked = true;
-                                  //   setItems(widget.model);
-                                  // });
-                                },
+                                onTap: isInCart
+                                    ? () {
+                                        null;
+                                        print(isInCart);
+                                      }
+                                    : () {
+                                        print(isInCart);
+                                        var cart = context.read<CartModel>();
+                                        cart.addItem(widget.model);
+                                      },
                                 child: Container(
                                   height: 30,
                                   width: MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
-                                    color: isClicked
+                                    color: isInCart
                                         ? colorAccentGreyBtn
                                         : colorAccentGreen,
                                     borderRadius: const BorderRadius.all(
@@ -349,19 +344,20 @@ class _ItemCardState extends State<ItemCard> {
 Widget itemNotFound(context) {
   return SingleChildScrollView(
       child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 150.0),
-          child: Column(
-            children: [
-              const Icon(Icons.warning_amber_rounded,
-                  size: 44, color: colorAccentGreyBtn),
-              const SizedBox(height: 6),
-              text(
-                'No item found ...',
-                fontFamily: fontLight,
-                fontSize: textSizeMLarge,
-              ),
-            ],
-          )));
+    padding: const EdgeInsets.symmetric(vertical: 150.0),
+    child: Column(
+      children: [
+        const Icon(Icons.warning_amber_rounded,
+            size: 44, color: colorAccentGreyBtn),
+        const SizedBox(height: 6),
+        text(
+          'No item found ...',
+          fontFamily: fontLight,
+          fontSize: textSizeMLarge,
+        ),
+      ],
+    ),
+  ));
 }
 
 Widget itemDetailsCard(context, model) {
@@ -396,132 +392,129 @@ Widget itemDetailsCard(context, model) {
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(16)),
                 )),
-            // the last expanded --------------------------------------------------
             Expanded(
-                flex: 4,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
-                      // color: Colors.blue,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Row(
-                              children: [
-                                text('Category:',
-                                    textColor: Colors.grey[600],
-                                    fontFamily: fontBold,
-                                    fontSize: textSizeSMedium),
-                                const SizedBox(width: 6),
-                                text(model.category,
-                                    fontFamily: fontBold,
-                                    fontSize: textSizeSMedium),
-                                const SizedBox(width: 6),
-                                text('كبابجي', fontSize: textSizeSMedium),
-                              ],
-                            )),
-                      ),
+              flex: 4,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Row(
+                            children: [
+                              text('Category:',
+                                  textColor: Colors.grey[600],
+                                  fontFamily: fontBold,
+                                  fontSize: textSizeSMedium),
+                              const SizedBox(width: 6),
+                              text(model.category,
+                                  fontFamily: fontBold,
+                                  fontSize: textSizeSMedium),
+                              const SizedBox(width: 6),
+                              text('كبابجي', fontSize: textSizeSMedium),
+                            ],
+                          )),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      // color: Colors.black,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(Icons.watch_later,
-                                        color: colorAccentGreen),
-                                    const SizedBox(width: 4),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        text('delivery is available',
-                                            textColor: Colors.grey[600],
-                                            fontFamily: fontBold,
-                                            fontSize: textSizeSmall,
-                                            latterSpacing: 0.0),
-                                        const SizedBox(height: 2),
-                                        text('09:00-22:00',
-                                            fontSize: textSizeSMedium),
-                                      ],
-                                    )
-                                  ],
-                                )
-                              ],
-                            ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 4,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(Icons.watch_later,
+                                      color: colorAccentGreen),
+                                  const SizedBox(width: 4),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      text('delivery is available',
+                                          textColor: Colors.grey[600],
+                                          fontFamily: fontBold,
+                                          fontSize: textSizeSmall,
+                                          latterSpacing: 0.0),
+                                      const SizedBox(height: 2),
+                                      text('09:00-22:00',
+                                          fontSize: textSizeSMedium),
+                                    ],
+                                  )
+                                ],
+                              )
+                            ],
                           ),
-                          Expanded(
-                            flex: 3,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    width: 160,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.orangeAccent,
-                                            width: 1.5),
-                                        borderRadius:
-                                            BorderRadius.circular(06)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 6),
-                                      child: Row(
-                                        children: [
-                                          svgPicture(ic_alert_circle,
-                                              Colors.orangeAccent, 24.0),
-                                          const SizedBox(width: 4),
-                                          Flexible(
-                                            child: text(
-                                                'the delivery can be free if you have enough points',
-                                                fontSize: textSizeXSmall,
-                                                latterSpacing: 0.0,
-                                                isLongText: true),
-                                          )
-                                        ],
-                                      ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  width: 160,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Colors.orangeAccent,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.circular(06)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6),
+                                    child: Row(
+                                      children: [
+                                        svgPicture(ic_alert_circle,
+                                            Colors.orangeAccent, 24.0),
+                                        const SizedBox(width: 4),
+                                        Flexible(
+                                          child: text(
+                                              'the delivery can be free if you have enough points',
+                                              fontSize: textSizeXSmall,
+                                              latterSpacing: 0.0,
+                                              isLongText: true),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          text('Price:',
+                              textColor: colorAccentGreen,
+                              fontFamily: fontBold,
+                              fontSize: textSizeMLarge),
+                          const SizedBox(width: 2),
+                          text(
+                            '${model.price} DA',
+                            textColor: colorAccentGreen,
+                            fontFamily: fontBold,
                           ),
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.04,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            text('Price:',
-                                textColor: colorAccentGreen,
-                                fontFamily: fontBold,
-                                fontSize: textSizeMLarge),
-                            const SizedBox(width: 2),
-                            text(
-                              '${model.price} DA',
-                              textColor: colorAccentGreen,
-                              fontFamily: fontBold,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                )),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ));

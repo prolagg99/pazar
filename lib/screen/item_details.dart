@@ -1,20 +1,18 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:pazar/model/cart_model.dart';
-import 'package:pazar/model/model.dart';
+import 'package:pazar/model/cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
-import 'package:pazar/utils/data_generation.dart';
+import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 import 'package:provider/provider.dart';
 
 class ItemDetails extends StatefulWidget {
-  // const ItemDetails({Key? key}) : super(key: key);
   static String tag = '/ItemDetails';
 
-  final Dishes model;
+  final Item model;
   const ItemDetails(this.model);
 
   @override
@@ -22,14 +20,16 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
-  bool isClicked = false;
-  // final cart = CartModel();
-
   @override
   Widget build(BuildContext context) {
-    CartModel cartModel = Provider.of<CartModel>(context, listen: false);
-
     changeStatusColor(colorAccentGreen);
+
+    Item item = widget.model;
+    var isInCart = context.select<CartModel, bool>(
+      // Here, we are only interested whether [item] is inside the cart.
+      (cart) => cart.items.contains(item),
+    );
+
     return Scaffold(
         backgroundColor: colorPrimary,
         appBar: appBar(context, 'item details'),
@@ -42,23 +42,23 @@ class _ItemDetailsState extends State<ItemDetails> {
                   child: itemDetailsCard(context, widget.model)),
             ),
             GestureDetector(
-              onTap: () {
-                // setState(() {
-                //   isClicked = true;
-                //   setItems(widget.model);
-                // });
-                //
-
-                cartModel.addItem(widget.model);
-                // cart.addItem(widget.model);
-                print(cartModel.items.length);
-                back(context);
-              },
+              onTap: isInCart
+                  ? () {
+                      null;
+                      print(isInCart);
+                    }
+                  : () {
+                      print(isInCart);
+                      var cart = context.read<CartModel>();
+                      cart.addItem(item);
+                      print(cart.items.length);
+                      back(context);
+                    },
               child: Container(
                   height: 55,
                   width: 220,
                   decoration: BoxDecoration(
-                    color: isClicked ? colorAccentGreyBtn : colorAccentGreen,
+                    color: isInCart ? colorAccentGreyBtn : colorAccentGreen,
                     borderRadius: BorderRadius.circular(32),
                   ),
                   child: Align(

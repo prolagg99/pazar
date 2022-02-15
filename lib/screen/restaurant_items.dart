@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pazar/model/model.dart';
+import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/colors.dart';
-import 'package:pazar/utils/data_generation.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantItems extends StatefulWidget {
   const RestaurantItems({Key? key}) : super(key: key);
@@ -14,18 +14,11 @@ class RestaurantItems extends StatefulWidget {
 }
 
 class _RestaurantItemsState extends State<RestaurantItems> {
-  List<Dishes> _mDishes = [];
-  late Dishes firstItem;
-
-  @override
-  void initState() {
-    _mDishes = getDishes();
-    firstItem = _mDishes[0];
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var cart = context.watch<CatalogModel>();
+    Item firstItem = cart.catalogItems[0];
+
     changeStatusColor(colorAccentGreen);
     return Scaffold(
       backgroundColor: colorPrimary,
@@ -39,7 +32,6 @@ class _RestaurantItemsState extends State<RestaurantItems> {
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(46))),
                 automaticallyImplyLeading: false,
-                // expandedHeight: 101,
                 elevation: 0,
                 pinned: false,
                 snap: false,
@@ -60,13 +52,13 @@ class _RestaurantItemsState extends State<RestaurantItems> {
                 child: SizedBox(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(0.0),
-                    itemCount: _mDishes.length,
+                    itemCount: cart.catalogItems.length,
                     itemBuilder: (context, index) {
-                      return _mDishes[index] == firstItem
+                      return cart.catalogItems[index] == firstItem
                           ? Padding(
                               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: ItemCard(_mDishes[index]))
-                          : ItemCard(_mDishes[index]);
+                              child: ItemCard(cart.catalogItems[index]))
+                          : ItemCard(cart.catalogItems[index]);
                     },
                   ),
                 ),

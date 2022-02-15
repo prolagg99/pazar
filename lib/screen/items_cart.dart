@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:pazar/model/cart_model.dart';
-import 'package:pazar/model/model.dart';
+import 'package:pazar/model/cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
+import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 import 'package:provider/provider.dart';
@@ -20,47 +20,42 @@ class ItemCart extends StatefulWidget {
 
 class _ItemCartState extends State<ItemCart> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Consumer<CartModel>(builder: (context, cart, child) {
-      return Scaffold(
-          backgroundColor: Colors.white,
-          appBar: PreferredSize(
-            preferredSize: const Size(0, 184),
-            child: ItemsCartAppBar(cartModel: cart),
-          ),
-          body: SizedBox(
-            child: ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: Scrollbar(
-                child: Container(
-                  color: Colors.white,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(0.0),
-                    itemCount: cart.items.length,
-                    itemBuilder: (context, index) {
-                      return CartItemsCard(
-                        model: cart.items[index],
-                        index: index,
-                      );
-                    },
-                  ),
-                ),
+    var cart = context.watch<CartModel>();
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const PreferredSize(
+        preferredSize: Size(0, 184),
+        child: ItemsCartAppBar(),
+      ),
+      body: SizedBox(
+        child: ScrollConfiguration(
+          behavior: MyBehavior(),
+          child: Scrollbar(
+            child: Container(
+              color: Colors.white,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(0.0),
+                itemCount: cart.items.length,
+                itemBuilder: (context, index) {
+                  return CartItemsCard(
+                    item: cart.items[index],
+                    index: index,
+                  );
+                },
               ),
             ),
-          ));
-    });
+          ),
+        ),
+      ),
+    );
   }
 }
 
 class ItemsCartAppBar extends StatefulWidget {
-  CartModel cartModel;
+  const ItemsCartAppBar({Key? key}) : super(key: key);
 
-  ItemsCartAppBar({Key? key, required this.cartModel}) : super(key: key);
   @override
   _ItemsCartAppBarState createState() => _ItemsCartAppBarState();
 }
@@ -68,8 +63,6 @@ class ItemsCartAppBar extends StatefulWidget {
 class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
   @override
   Widget build(BuildContext context) {
-    // CartModel cartModel = Provider.of<CartModel>(context, listen: false);
-
     changeStatusColor(colorAccentGreen);
     return SafeArea(
       child: Container(
@@ -90,10 +83,12 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                           text('total',
                               fontSize: textSizeMedium,
                               textColor: Colors.white),
-                          text('${widget.cartModel.totalPrice}0DA',
-                              fontFamily: fontBold,
-                              fontSize: textSizeMedium,
-                              textColor: Colors.white),
+                          Consumer<CartModel>(
+                              builder: (context, cart, child) => text(
+                                  '${cart.totalPrice}0DA',
+                                  fontFamily: fontBold,
+                                  fontSize: textSizeMedium,
+                                  textColor: Colors.white)),
                           text('delivery price: 200.00DA',
                               textColor: Colors.white,
                               fontSize: textSizeSmall,
@@ -162,11 +157,11 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
 }
 
 class CartItemsCard extends StatefulWidget {
-  Dishes model;
+  Item item;
   int index;
   CartItemsCard({
     Key? key,
-    required this.model,
+    required this.item,
     required this.index,
   }) : super(key: key);
 
@@ -175,15 +170,16 @@ class CartItemsCard extends StatefulWidget {
 }
 
 class _CartItemsCardState extends State<CartItemsCard> {
-  int qnt = 1;
+  late int qnt = 1;
   double _itemPrice = 0.0;
   double _totalPrice = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _itemPrice = widget.model.price;
-    _totalPrice = _itemPrice;
+    _itemPrice = widget.item.price; // never change
+    _totalPrice = widget.item.totalPrice;
+    qnt = widget.item.qnt;
   }
 
   @override
@@ -199,6 +195,8 @@ class _CartItemsCardState extends State<CartItemsCard> {
         dismissal: SlidableDismissal(
           child: const SlidableDrawerDismissal(),
           onDismissed: (actionType) {
+            // maybe this cause a problem in the future
+            cartModel.updateItemQnt(widget.index, 1, widget.item.price);
             cartModel.remove(widget.index);
             print(cartModel.items.length);
           },
@@ -225,13 +223,13 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
-                                  image: AssetImage(widget.model.image),
+                                  image: AssetImage(widget.item.image),
                                   fit: BoxFit.fill,
                                 )),
                           ),
                           const SizedBox(width: 10.0),
                           Container(
-                              child: text(widget.model.name,
+                              child: text(widget.item.name,
                                   fontSize: textSizeSMedium)),
                           const SizedBox(width: 10.0),
                         ],
@@ -269,12 +267,8 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                             _totalPrice =
                                                 _totalPrice - _itemPrice;
                                           });
-                                          // the new methode :
                                           cartModel.updateItemQnt(
                                               widget.index, qnt, _totalPrice);
-                                          print(widget.model.price);
-                                          print(widget.model.qnt);
-                                          print(cartModel.totalPrice);
                                         }
                                       },
                                       child: SizedBox(
@@ -285,7 +279,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                       flex: 2,
                                       child: Center(
                                           child: Text(
-                                        '${widget.model.qnt}',
+                                        '${widget.item.qnt}',
                                         style: const TextStyle(
                                             fontSize: textSizeSMedium),
                                       ))),
@@ -297,12 +291,8 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                             qnt += 1;
                                             _totalPrice += _itemPrice;
                                           });
-                                          // the new methode :
                                           cartModel.updateItemQnt(
                                               widget.index, qnt, _totalPrice);
-                                          print(widget.model.price);
-                                          print(widget.model.qnt);
-                                          print(cartModel.totalPrice);
                                         },
                                         child: SizedBox(
                                             child: Center(child: text('+'))),
@@ -313,7 +303,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                           text('X', fontSize: 9.0),
                           const SizedBox(width: 3.0),
                           Flexible(
-                            child: text('${widget.model.price}0DA',
+                            child: text('${widget.item.totalPrice}0DA',
                                 textColor: colorAccentGreen,
                                 fontSize: textSizeSMedium),
                           ),
