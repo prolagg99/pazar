@@ -61,6 +61,7 @@ class ItemsCartAppBar extends StatefulWidget {
 }
 
 class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
+  double deliveryPrice = 200.0;
   @override
   Widget build(BuildContext context) {
     changeStatusColor(colorAccentGreen);
@@ -84,12 +85,18 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                               fontSize: textSizeMedium,
                               textColor: Colors.white),
                           Consumer<CartModel>(
-                              builder: (context, cart, child) => text(
-                                  '${cart.totalPrice}0DA',
-                                  fontFamily: fontBold,
-                                  fontSize: textSizeMedium,
-                                  textColor: Colors.white)),
-                          text('delivery price: 200.00DA',
+                              builder: (context, cart, child) => cart
+                                      .items.isNotEmpty
+                                  ? text(
+                                      '${cart.totalPrice + deliveryPrice}0DA',
+                                      fontFamily: fontBold,
+                                      fontSize: textSizeMedium,
+                                      textColor: Colors.white)
+                                  : text('${cart.totalPrice}0DA',
+                                      fontFamily: fontBold,
+                                      fontSize: textSizeMedium,
+                                      textColor: Colors.white)),
+                          text('delivery price: ${deliveryPrice}0DA',
                               textColor: Colors.white,
                               fontSize: textSizeSmall,
                               textTitleCase: true),
