@@ -3,6 +3,7 @@ import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
+import 'package:pazar/utils/images.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -132,30 +133,134 @@ class _ProfileState extends State<Profile> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 18),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Icon(
-                                  Icons.translate,
-                                  color: colorAccentBlue,
-                                ),
-                                const SizedBox(width: 10),
-                                SizedBox(
-                                  width: 168,
-                                  child: text('languages',
-                                      fontFamily: fontBold,
-                                      textColor: Colors.grey[800],
-                                      textTitleCase: true),
-                                ),
-                                const SizedBox(width: 10),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: colorAccentBlue,
-                                  size: 17,
-                                ),
-                              ],
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet<void>(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                    height: 170,
+                                    color: Colors.white,
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Expanded(
+                                            flex: 1,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 16,
+                                                  ),
+                                                  child: SizedBox(
+                                                      width: 70,
+                                                      height: 35,
+                                                      child: svgPicture2(
+                                                          ic_flag_us)),
+                                                ),
+                                                text('english',
+                                                    fontFamily: fontBold,
+                                                    fontSize: textSizeMLarge),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 16,
+                                                  ),
+                                                  child: SizedBox(
+                                                    width: 70,
+                                                    height: 35,
+                                                    child: svgPicture2(
+                                                      ic_flag_fr,
+                                                    ),
+                                                  ),
+                                                ),
+                                                text('french',
+                                                    fontFamily: fontBold,
+                                                    fontSize: textSizeMLarge),
+                                              ],
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.03,
+                                              child: ElevatedButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.red),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: text('cancel',
+                                                        textColor: Colors.white,
+                                                        fontFamily: fontBold,
+                                                        fontSize:
+                                                            textSizeMLarge)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          // ElevatedButton(
+                                          //   child:
+                                          //       const Text('Close BottomSheet'),
+                                          //   onPressed: () =>
+                                          //       Navigator.pop(context),
+                                          // )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 18),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Icon(
+                                    Icons.translate,
+                                    color: colorAccentBlue,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  SizedBox(
+                                    width: 168,
+                                    child: text('languages',
+                                        fontFamily: fontBold,
+                                        textColor: Colors.grey[800],
+                                        textTitleCase: true),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: colorAccentBlue,
+                                    size: 17,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           Padding(

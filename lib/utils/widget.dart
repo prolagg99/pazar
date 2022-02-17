@@ -29,6 +29,10 @@ SvgPicture svgPicture(icon, color, size) {
   );
 }
 
+SvgPicture svgPicture2(icon) {
+  return SvgPicture.asset(icon, fit: BoxFit.scaleDown);
+}
+
 Widget text(text,
     {var fontFamily = fontRegular,
     var fontSize = textSizeMedium,

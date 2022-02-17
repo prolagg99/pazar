@@ -9,6 +9,8 @@ const ic_home = "images/ic_home.svg";
 const ic_cart = "images/ic_cart.svg";
 const ic_alert_circle = "images/ic_alert_circle.svg";
 const ic_alert_triangle = "images/ic_alert_triangle.svg";
+const ic_flag_us = "images/flag_us.svg";
+const ic_flag_fr = "images/flag_fr.svg";
 
 // slides images
 const img_slide1 = "images/slide1.jpg";

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pazar/model/cart.dart';
-import 'package:pazar/model/catalog.dart';
 import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/profile.dart';
 import 'package:pazar/utils/colors.dart';
-import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
