@@ -1,6 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -63,7 +64,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   ),
                   child: Align(
                     child: text(
-                      'Add To Cart',
+                      getTranslated(context, 'add_to_cart'),
                       textColor: Colors.white,
                       fontSize: textSizeMLarge,
                     ),

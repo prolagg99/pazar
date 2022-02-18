@@ -3,6 +3,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
+import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/screen/item_details.dart';
@@ -327,7 +328,7 @@ class _ItemCardState extends State<ItemCard> {
                                   ),
                                   child: Center(
                                     child: text(
-                                      'Add to cart',
+                                      getTranslated(context, 'add_to_cart'),
                                       textColor: Colors.white,
                                       fontSize: textSizeSmall,
                                       isCentered: true,
@@ -355,7 +356,7 @@ Widget itemNotFound(context) {
             size: 44, color: colorAccentGreyBtn),
         const SizedBox(height: 6),
         text(
-          'No item found ...',
+          getTranslated(context, 'no_item_found'),
           fontFamily: fontLight,
           fontSize: textSizeMLarge,
         ),
@@ -408,7 +409,7 @@ Widget itemDetailsCard(context, model) {
                           alignment: Alignment.bottomLeft,
                           child: Row(
                             children: [
-                              text('Category:',
+                              text(getTranslated(context, 'category'),
                                   textColor: Colors.grey[600],
                                   fontFamily: fontBold,
                                   fontSize: textSizeSMedium),
@@ -440,7 +441,9 @@ Widget itemDetailsCard(context, model) {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      text('delivery is available',
+                                      text(
+                                          getTranslated(
+                                              context, 'delivery_is_available'),
                                           textColor: Colors.grey[600],
                                           fontFamily: fontBold,
                                           fontSize: textSizeSmall,
@@ -479,7 +482,8 @@ Widget itemDetailsCard(context, model) {
                                         const SizedBox(width: 4),
                                         Flexible(
                                           child: text(
-                                              'the delivery can be free if you have enough points',
+                                              getTranslated(
+                                                  context, 'item_details_note'),
                                               fontSize: textSizeXSmall,
                                               latterSpacing: 0.0,
                                               isLongText: true),
@@ -502,7 +506,7 @@ Widget itemDetailsCard(context, model) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          text('Price:',
+                          text(getTranslated(context, 'price'),
                               textColor: colorAccentGreen,
                               fontFamily: fontBold,
                               fontSize: textSizeMLarge),

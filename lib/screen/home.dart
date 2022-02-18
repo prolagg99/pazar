@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/restaurant_items.dart';
 import 'package:pazar/utils/colors.dart';
@@ -121,7 +122,7 @@ class _HomeState extends State<Home> {
                                             Radius.circular(6))),
                                     fillColor: colorAccentGrey,
                                     contentPadding: EdgeInsets.zero,
-                                    hintText: 'search',
+                                    hintText: getTranslated(context, 'search'),
                                     hintStyle:
                                         const TextStyle(color: Colors.grey)),
                               ),
@@ -156,9 +157,12 @@ class _HomeState extends State<Home> {
                                 ),
                                 Flexible(
                                   child: homeTextCard(
-                                      context,
-                                      'today new available',
-                                      'best of the today items list'),
+                                    context,
+                                    getTranslated(
+                                        context, 'today_available_title'),
+                                    getTranslated(
+                                        context, 'today_available_subtitle'),
+                                  ),
                                 ),
                                 Flexible(
                                   child: SizedBox(
@@ -178,8 +182,12 @@ class _HomeState extends State<Home> {
                                       )),
                                 ),
                                 Flexible(
-                                  child: homeTextCard(context, 'all items',
-                                      'all items with best items list'),
+                                  child: homeTextCard(
+                                    context,
+                                    getTranslated(context, 'all_items'),
+                                    getTranslated(
+                                        context, 'all_items_subtitle'),
+                                  ),
                                 ),
                                 Flexible(
                                   child: SizedBox(

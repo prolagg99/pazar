@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -81,7 +82,7 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          text('total',
+                          text(getTranslated(context, 'total'),
                               fontSize: textSizeMedium,
                               textColor: Colors.white),
                           Consumer<CartModel>(
@@ -96,7 +97,10 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                                       fontFamily: fontBold,
                                       fontSize: textSizeMedium,
                                       textColor: Colors.white)),
-                          text('delivery price: ${deliveryPrice}0DA',
+                          text(
+                              getTranslated(context, 'delivery_price')! +
+                                  '${deliveryPrice}0DA',
+                              // 'delivery price: ${deliveryPrice}0DA',
                               textColor: Colors.white,
                               fontSize: textSizeSmall,
                               textTitleCase: true),
@@ -118,9 +122,9 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                                 color: colorAccentBlue,
                                 borderRadius: BorderRadius.circular(08)),
                             child: Center(
-                              child: text('checkout',
+                              child: text(getTranslated(context, 'checkout'),
                                   fontFamily: fontBold,
-                                  fontSize: textSizeSMedium,
+                                  fontSize: textSizeSmall,
                                   textColor: Colors.white),
                             ),
                           ),
@@ -139,21 +143,28 @@ class _ItemsCartAppBarState extends State<ItemsCartAppBar> {
                     topLeft: Radius.circular(26.0),
                     topRight: Radius.circular(26.0),
                   )),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  text('cart items',
-                      fontFamily: fontBold,
-                      textColor: colorAccentGreen,
-                      textTitleCase: true),
-                  const SizedBox(
-                    height: 2.0,
-                  ),
-                  text('swip left to remove items from list',
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20.0, 7.0, 20.0, 0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    text(getTranslated(context, 'cart_items'),
+                        fontFamily: fontBold,
+                        textColor: colorAccentGreen,
+                        textTitleCase: true),
+                    const SizedBox(
+                      height: 2.0,
+                    ),
+                    text(
+                      getTranslated(context, 'swip_left'),
                       fontFamily: fontLight,
                       fontSize: textSizeSMedium,
-                      textColor: Colors.grey[600]),
-                ],
+                      isLongText: true,
+                      isCentered: true,
+                      textColor: Colors.grey[600],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -340,7 +351,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                       width: 6,
                     ),
                     text(
-                      'delete',
+                      getTranslated(context, 'delete'),
                       textColor: Colors.white,
                     )
                   ],
