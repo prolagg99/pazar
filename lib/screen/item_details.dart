@@ -42,26 +42,32 @@ class _ItemDetailsState extends State<ItemDetails> {
                   height: MediaQuery.of(context).size.height * 0.56,
                   child: itemDetailsCard(context, widget.model)),
             ),
-            GestureDetector(
-              onTap: isInCart
-                  ? () {
-                      null;
-                      print(isInCart);
-                    }
-                  : () {
-                      print(isInCart);
-                      var cart = context.read<CartModel>();
-                      cart.addItem(item);
-                      print(cart.items.length);
-                      back(context);
-                    },
-              child: Container(
-                  height: 55,
-                  width: 220,
-                  decoration: BoxDecoration(
-                    color: isInCart ? colorAccentGreyBtn : colorAccentGreen,
-                    borderRadius: BorderRadius.circular(32),
+            SizedBox(
+              height: 55,
+              width: 220,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    splashFactory: isInCart ? NoSplash.splashFactory : null,
+                    shadowColor: isInCart ? Colors.transparent : null,
+                    minimumSize: Size.zero,
+                    padding: EdgeInsets.zero,
+                    primary: isInCart ? colorAccentGreyBtn : colorAccentGreen,
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(36.0)),
                   ),
+                  onPressed: isInCart
+                      ? () {
+                          null;
+                          // print(isInCart);
+                        }
+                      : () {
+                          print(isInCart);
+                          var cart = context.read<CartModel>();
+                          cart.addItem(item);
+                          //           print(cart.items.length);
+                          back(context);
+                        },
                   child: Align(
                     child: text(
                       getTranslated(context, 'add_to_cart'),

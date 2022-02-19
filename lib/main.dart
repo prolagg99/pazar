@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
         title: "Flutter Localization Demo",
         theme: ThemeData(primarySwatch: Colors.blue),
         locale: _locale,
-        supportedLocales: const [Locale("en", "US"), Locale("hi", "IN")],
+        supportedLocales: const [Locale("en", "US"), Locale("fr", "FR")],
         localizationsDelegates: const [
           DemoLocalization.delegate,
           GlobalMaterialLocalizations.delegate,

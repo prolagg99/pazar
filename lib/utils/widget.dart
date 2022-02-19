@@ -305,28 +305,37 @@ class _ItemCardState extends State<ItemCard> {
                         children: [
                           Padding(
                               padding: const EdgeInsets.only(right: 12.0),
-                              child: InkWell(
-                                onTap: isInCart
-                                    ? () {
-                                        null;
-                                        print(isInCart);
-                                      }
-                                    : () {
-                                        print(isInCart);
-                                        var cart = context.read<CartModel>();
-                                        cart.addItem(widget.model);
-                                      },
-                                child: Container(
-                                  height: 30,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: isInCart
+                              child: SizedBox(
+                                height: 30,
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    splashFactory: isInCart
+                                        ? NoSplash.splashFactory
+                                        : null,
+                                    shadowColor:
+                                        isInCart ? Colors.transparent : null,
+                                    minimumSize: Size.zero,
+                                    padding: EdgeInsets.zero,
+                                    primary: isInCart
                                         ? colorAccentGreyBtn
                                         : colorAccentGreen,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(4)),
+                                    elevation: 0.0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0)),
                                   ),
-                                  child: Center(
+                                  onPressed: isInCart
+                                      ? () {
+                                          null;
+                                          print(isInCart);
+                                        }
+                                      : () {
+                                          print(isInCart);
+                                          var cart = context.read<CartModel>();
+                                          cart.addItem(widget.model);
+                                        },
+                                  child: ButtonTheme(
                                     child: text(
                                       getTranslated(context, 'add_to_cart'),
                                       textColor: Colors.white,

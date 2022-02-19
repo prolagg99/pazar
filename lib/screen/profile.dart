@@ -145,163 +145,45 @@ class _ProfileState extends State<Profile> {
                               ],
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Container(
-                                    height: 170,
-                                    color: Colors.white,
-                                    child: Center(
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 1,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                _changeLanguage(Language(1,
-                                                    "🇺🇸", "English", "en"));
-                                                Navigator.pop(context);
-                                              },
-                                              child: Container(
-                                                color: Colors.transparent,
-                                                // width: MediaQuery.of(context).size.width,
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        vertical: 16,
-                                                      ),
-                                                      child: SizedBox(
-                                                          width: 70,
-                                                          height: 35,
-                                                          child: svgPicture2(
-                                                              ic_flag_us)),
-                                                    ),
-                                                    text(
-                                                        getTranslated(
-                                                            context, 'english'),
-                                                        fontFamily: fontBold,
-                                                        fontSize:
-                                                            textSizeMLarge),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                _changeLanguage(Language(
-                                                    2, "🇮🇳", "हिंदी", "hi"));
-                                                Navigator.pop(context);
-                                              },
-                                              child: Container(
-                                                color: Colors.transparent,
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        vertical: 16,
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 70,
-                                                        height: 35,
-                                                        child: svgPicture2(
-                                                          ic_flag_fr,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    text(
-                                                        getTranslated(
-                                                            context, 'french'),
-                                                        fontFamily: fontBold,
-                                                        fontSize:
-                                                            textSizeMLarge),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.03,
-                                              child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty.all<
-                                                          Color>(Colors.red),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: text(
-                                                        getTranslated(
-                                                            context, 'cancel'),
-                                                        textColor: Colors.white,
-                                                        fontFamily: fontBold,
-                                                        fontSize:
-                                                            textSizeMLarge)),
-                                              ),
-                                            ),
-                                          ),
-
-                                          // ElevatedButton(
-                                          //   child:
-                                          //       const Text('Close BottomSheet'),
-                                          //   onPressed: () =>
-                                          //       Navigator.pop(context),
-                                          // )
-                                        ],
-                                      ),
+                          Material(
+                            color: Colors.transparent,
+                            child: GestureDetector(
+                              onTap: () {
+                                showModalBottomSheet<void>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const ShowBottomSheetLang();
+                                  },
+                                );
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 18),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Icon(
+                                      Icons.translate,
+                                      color: colorAccentBlue,
                                     ),
-                                  );
-                                },
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 18),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Icon(
-                                    Icons.translate,
-                                    color: colorAccentBlue,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 168,
-                                    child: text(
-                                        getTranslated(context, 'languages'),
-                                        fontFamily: fontBold,
-                                        textColor: Colors.grey[800],
-                                        textTitleCase: true),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  const Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: colorAccentBlue,
-                                    size: 17,
-                                  ),
-                                ],
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: 168,
+                                      child: text(
+                                          getTranslated(context, 'languages'),
+                                          fontFamily: fontBold,
+                                          textColor: Colors.grey[800],
+                                          textTitleCase: true),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    const Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: colorAccentBlue,
+                                      size: 17,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -345,13 +227,19 @@ class _ProfileState extends State<Profile> {
                       )),
                 ),
                 const SizedBox(height: 26),
-                Container(
+                SizedBox(
                   height: 40,
                   width: 160,
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(12)),
-                  child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      primary: Colors.red,
+                      elevation: 0.0,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                    ),
+                    onPressed: () {},
                     child: text(getTranslated(context, 'logout'),
                         fontFamily: fontBold,
                         fontSize: textSizeSMedium,
@@ -364,6 +252,114 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       )),
+    );
+  }
+}
+
+class ShowBottomSheetLang extends StatelessWidget {
+  const ShowBottomSheetLang({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    void _changeLanguage(Language language) async {
+      Locale newLocale = await setLocale(language.languageCode);
+      MyApp.setLocale(context, newLocale);
+    }
+
+    return Container(
+      height: 170,
+      color: Colors.white,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Material(
+                child: InkWell(
+                  onTap: () {
+                    _changeLanguage(Language(1, "English", "en"));
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    // width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 16,
+                          ),
+                          child: SizedBox(
+                              width: 70,
+                              height: 35,
+                              child: svgPicture2(ic_flag_us)),
+                        ),
+                        text(getTranslated(context, 'english'),
+                            fontFamily: fontBold, fontSize: textSizeMLarge),
+                      ],
+                    ),
+                  ),
+                ),
+                color: Colors.transparent,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Material(
+                child: InkWell(
+                  onTap: () {
+                    _changeLanguage(Language(2, "FRANCAIS", "fr"));
+                    Navigator.pop(context);
+                  },
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 16,
+                        ),
+                        child: SizedBox(
+                          width: 70,
+                          height: 35,
+                          child: svgPicture2(
+                            ic_flag_fr,
+                          ),
+                        ),
+                      ),
+                      text(getTranslated(context, 'french'),
+                          fontFamily: fontBold, fontSize: textSizeMLarge),
+                    ],
+                  ),
+                ),
+                color: Colors.transparent,
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.03,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: text(getTranslated(context, 'cancel'),
+                          textColor: Colors.white,
+                          fontFamily: fontBold,
+                          fontSize: textSizeMLarge)),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
