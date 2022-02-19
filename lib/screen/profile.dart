@@ -18,12 +18,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   int pnts = 0;
-  void _changeLanguage(Language language) async {
-    Locale newLocale = await setLocale(language.languageCode);
-    // const Locale("hi", "IN");
-    MyApp.setLocale(context, newLocale);
-  }
-
   @override
   Widget build(BuildContext context) {
     changeStatusColor(colorAccentGreen);
@@ -147,44 +141,47 @@ class _ProfileState extends State<Profile> {
                           ),
                           Material(
                             color: Colors.transparent,
-                            child: GestureDetector(
-                              onTap: () {
-                                showModalBottomSheet<void>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return const ShowBottomSheetLang();
-                                  },
-                                );
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 18),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Icon(
-                                      Icons.translate,
-                                      color: colorAccentBlue,
-                                    ),
-                                    const SizedBox(width: 10),
-                                    SizedBox(
-                                      width: 168,
-                                      child: text(
-                                          getTranslated(context, 'languages'),
-                                          fontFamily: fontBold,
-                                          textColor: Colors.grey[800],
-                                          textTitleCase: true),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    const Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: colorAccentBlue,
-                                      size: 17,
-                                    ),
-                                  ],
+                            child: Material(
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return const ShowBottomSheetLang();
+                                    },
+                                  );
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Icon(
+                                        Icons.translate,
+                                        color: colorAccentBlue,
+                                      ),
+                                      const SizedBox(width: 10),
+                                      SizedBox(
+                                        width: 168,
+                                        child: text(
+                                            getTranslated(context, 'languages'),
+                                            fontFamily: fontBold,
+                                            textColor: Colors.grey[800],
+                                            textTitleCase: true),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      const Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: colorAccentBlue,
+                                        size: 17,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
+                              color: Colors.transparent,
                             ),
                           ),
                           Padding(
@@ -263,7 +260,7 @@ class ShowBottomSheetLang extends StatelessWidget {
   Widget build(BuildContext context) {
     void _changeLanguage(Language language) async {
       Locale newLocale = await setLocale(language.languageCode);
-      MyApp.setLocale(context, newLocale);
+      Pazar.setLocale(context, newLocale);
     }
 
     return Container(

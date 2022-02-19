@@ -334,6 +334,7 @@ class _ItemCardState extends State<ItemCard> {
                                           print(isInCart);
                                           var cart = context.read<CartModel>();
                                           cart.addItem(widget.model);
+                                          cart.addItemToCart();
                                         },
                                   child: ButtonTheme(
                                     child: text(

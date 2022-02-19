@@ -19,23 +19,23 @@ void main() {
         create: (context) => CartModel(),
       ),
     ],
-    child: const MyApp(),
+    child: const Pazar(),
   ));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Pazar extends StatefulWidget {
+  const Pazar({Key? key}) : super(key: key);
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    _PazarState? state = context.findAncestorStateOfType<_PazarState>();
     state!.setLocale(newLocale);
   }
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _PazarState createState() => _PazarState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _PazarState extends State<Pazar> {
   Locale? _locale;
   setLocale(Locale locale) {
     setState(() {

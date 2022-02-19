@@ -216,6 +216,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
             // maybe this cause a problem in the future
             cartModel.updateItemQnt(widget.index, 1, widget.item.price);
             cartModel.remove(widget.index);
+            cartModel.removeItemFromCart();
             print(cartModel.items.length);
           },
         ),

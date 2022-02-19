@@ -65,7 +65,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                           print(isInCart);
                           var cart = context.read<CartModel>();
                           cart.addItem(item);
-                          //           print(cart.items.length);
+                          cart.addItemToCart();
                           back(context);
                         },
                   child: Align(
