@@ -5,7 +5,9 @@ class Slides {
   Slides({this.image});
 }
 
-class Restaurants {
+class Categories {
   var image;
-  Restaurants({this.image});
+  var name;
+  var nameArab;
+  Categories({this.image, this.name, this.nameArab});
 }

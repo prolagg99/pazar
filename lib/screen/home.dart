@@ -1,13 +1,17 @@
+// ignore_for_file: avoid_function_literals_in_foreach_calls, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/restaurant_items.dart';
+import 'package:pazar/services/get_categories.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/widget.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -21,17 +25,20 @@ class _HomeState extends State<Home> {
   final TextEditingController _textEditingController = TextEditingController();
   static var formKey = GlobalKey<FormState>();
 
-  List<Restaurants> mRestaurants = [];
+  List<Categories> mCategories = [];
   List<Item> dishesListOnSearch = [];
   List<Slides> mSlides = [];
-  late Restaurants lastItem;
+  late Categories lastItem;
+  GetCategories categoris = GetCategories();
 
   @override
   void initState() {
     super.initState();
-    mRestaurants = getRestaurantImages();
-    lastItem = mRestaurants[mRestaurants.length - 1];
+    mCategories = getRestaurantImages();
+    lastItem = mCategories[mCategories.length - 1];
     mSlides = getSlides();
+
+    categoris.getCategories();
   }
 
   @override
@@ -176,9 +183,11 @@ class _HomeState extends State<Home> {
                                                   builder: (context) {
                                             return const RestaurantItems();
                                           }));
+                                          print(
+                                              categoris.categoriesList.length);
                                         },
                                         child: restaurantListView(
-                                            mRestaurants, lastItem),
+                                            categoris.categoriesList, lastItem),
                                       )),
                                 ),
                                 Flexible(
@@ -214,3 +223,26 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
+// final CollectionReference categoriesCollection =
+//     FirebaseFirestore.instance.collection('categories');
+// List<Categories> categoriesList = [];
+
+// // fetsh data from db to search elements and display it
+// Future<void> getCategories() async {
+//   categoriesCollection.get().then((value) {
+//     return value.docs.forEach((doc) {
+//       print('getDocuments ${doc.data()}');
+//       categoriesList.add(
+//         Categories(
+//           image:
+//               doc.data().toString().contains('image') ? doc.get('image') : '',
+//           name: doc.data().toString().contains('name') ? doc.get('name') : '',
+//           nameArab: doc.data().toString().contains('nameArab')
+//               ? doc.get('nameArab')
+//               : '',
+//         ),
+//       );
+//     });
+//   });
+// }

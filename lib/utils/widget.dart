@@ -214,7 +214,7 @@ Widget restaurantCard(context, model, last) {
           borderRadius: BorderRadius.circular(10),
           color: Colors.purple[600],
           image: DecorationImage(
-            image: AssetImage(model.image),
+            image: NetworkImage(model.image),
             fit: BoxFit.fill,
           )),
     ),

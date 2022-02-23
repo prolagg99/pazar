@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pazar/localization/demo_localization.dart';
@@ -11,7 +12,9 @@ import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/profile.dart';
 import 'package:pazar/screen/restaurant_items.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       Provider(create: (context) => CatalogModel()),
