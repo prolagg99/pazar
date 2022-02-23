@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "181106491794",
+    "project_id": "pazar-5420f",
+    "storage_bucket": "pazar-5420f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181106491794:android:98b9391daba53e1429014b",
+        "android_client_info": {
+          "package_name": "com.lagg99.pazar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181106491794-s9p3qg1s6pd889464v6rr65pg5b37omd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsWb-CY6aw9PaKU3RFXDldqm6wasEQcHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181106491794-s9p3qg1s6pd889464v6rr65pg5b37omd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
