@@ -1,23 +1,31 @@
+// ignore_for_file: must_be_immutable
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
-import 'package:provider/provider.dart';
 
-class RestaurantItems extends StatefulWidget {
-  const RestaurantItems({Key? key}) : super(key: key);
-  static String tag = '/RestaurantItems';
+class CategoryItems extends StatefulWidget {
+  final String category;
+  List<Item> categoryItems;
+  CategoryItems({
+    Key? key,
+    required this.category,
+    required this.categoryItems,
+  }) : super(key: key);
+  static String tag = '/CategoryItems';
 
   @override
-  _RestaurantItemsState createState() => _RestaurantItemsState();
+  _CategoryItemsState createState() => _CategoryItemsState();
 }
 
-class _RestaurantItemsState extends State<RestaurantItems> {
+class _CategoryItemsState extends State<CategoryItems> {
   @override
   Widget build(BuildContext context) {
-    var cart = context.watch<CatalogModel>();
-    Item firstItem = cart.catalogItems[0];
+    var categoryItems = widget.categoryItems;
+    Item firstItem = categoryItems[0];
 
     changeStatusColor(colorAccentGreen);
     return Scaffold(
@@ -40,7 +48,7 @@ class _RestaurantItemsState extends State<RestaurantItems> {
                   preferredSize: Size.fromHeight(40.0), // Add this code
                   child: Text(''), // Add this code
                 ),
-                flexibleSpace: appBar(context, 'kababji'),
+                flexibleSpace: appBar(context, widget.category),
               ),
             ];
           },
@@ -52,13 +60,13 @@ class _RestaurantItemsState extends State<RestaurantItems> {
                 child: SizedBox(
                   child: ListView.builder(
                     padding: const EdgeInsets.all(0.0),
-                    itemCount: cart.catalogItems.length,
+                    itemCount: categoryItems.length,
                     itemBuilder: (context, index) {
-                      return cart.catalogItems[index] == firstItem
+                      return categoryItems[index] == firstItem
                           ? Padding(
                               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: ItemCard(cart.catalogItems[index]))
-                          : ItemCard(cart.catalogItems[index]);
+                              child: ItemCard(categoryItems[index]))
+                          : ItemCard(categoryItems[index]);
                     },
                   ),
                 ),

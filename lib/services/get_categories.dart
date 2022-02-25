@@ -6,7 +6,6 @@
 //       FirebaseFirestore.instance.collection('categories');
 //   List<Categories> categoriesList = [];
 
-// // fetsh data from db to search elements and display it
 //   Future<void> getCategories() async {
 //     categoriesCollection.get().then((value) {
 //       return value.docs.forEach((doc) {

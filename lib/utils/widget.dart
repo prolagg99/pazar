@@ -1,13 +1,15 @@
-// ignore_for_file: use_key_in_widget_constructors, avoid_print
-
-import 'dart:math';
+// ignore_for_file: use_key_in_widget_constructors, avoid_print, must_be_immutable
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
+import 'package:pazar/model/model.dart';
+import 'package:pazar/screen/category_items.dart';
+import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/item_details.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -205,22 +207,64 @@ ListView itemListView(mDishes) {
       });
 }
 
-Widget restaurantCard(context, model, last) {
-  return Padding(
-    padding: model != last
-        ? const EdgeInsets.only(right: 10)
-        : const EdgeInsets.only(right: 0),
-    child: Container(
-      width: 132,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.purple[600],
-          image: DecorationImage(
-            image: NetworkImage(model.image),
-            fit: BoxFit.fill,
-          )),
-    ),
-  );
+class RestaurantCard extends StatefulWidget {
+  Categories category, last;
+  List<Item> itemsList;
+  RestaurantCard(
+      {Key? key,
+      required this.category,
+      required this.last,
+      required this.itemsList})
+      : super(key: key);
+  @override
+  _RestaurantCardState createState() => _RestaurantCardState();
+}
+
+class _RestaurantCardState extends State<RestaurantCard> {
+  List<Item> categoryItems = [];
+
+  void getCategoryItems() {
+    for (var element in itemsList) {
+      if (element.category == widget.category.name) {
+        categoryItems.add(element);
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCategoryItems();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: widget.category != widget.last
+          ? const EdgeInsets.only(right: 10)
+          : const EdgeInsets.only(right: 0),
+      child: GestureDetector(
+        child: Container(
+          width: 132,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.purple[600],
+              image: DecorationImage(
+                image: NetworkImage(widget.category.image),
+                fit: BoxFit.fill,
+              )),
+        ),
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CategoryItems(
+              category: widget.category.name,
+              categoryItems: categoryItems,
+            );
+          }));
+        },
+      ),
+    );
+  }
 }
 
 class ItemCard extends StatefulWidget {
@@ -404,7 +448,7 @@ Widget itemDetailsCard(context, model) {
                 child: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          fit: BoxFit.cover, image: AssetImage(model.image)),
+                          fit: BoxFit.cover, image: NetworkImage(model.image)),
                       color: Colors.red,
                       borderRadius: BorderRadius.circular(16)),
                 )),

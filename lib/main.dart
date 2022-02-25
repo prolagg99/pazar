@@ -11,7 +11,6 @@ import 'package:pazar/screen/bottom_navigation.dart';
 import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/items_cart.dart';
 import 'package:pazar/screen/profile.dart';
-import 'package:pazar/screen/restaurant_items.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -89,7 +88,7 @@ class _PazarState extends State<Pazar> {
         routes: <String, WidgetBuilder>{
           '/': (context) => const Loading(),
           Home.tag: (context) => const Home(),
-          RestaurantItems.tag: (context) => const RestaurantItems(),
+          BottomNavigation.tag: (context) => const BottomNavigation(),
           ItemCart.tag: (context) => const ItemCart(),
           Profile.tag: (context) => const Profile(),
         },

@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/model/model.dart';
-import 'package:pazar/screen/restaurant_items.dart';
-import 'package:pazar/services/get_categories.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/utils/widget.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
@@ -28,6 +25,7 @@ class _HomeState extends State<Home> {
   List<Item> dishesListOnSearch = [];
   List<Slides> mSlides = [];
   late Categories lastItem;
+  late Categories selectedCategory;
 
   @override
   void initState() {
@@ -172,23 +170,15 @@ class _HomeState extends State<Home> {
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.20,
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return const RestaurantItems();
-                                            }));
-                                          },
-                                          child: ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: categoriesList.length,
-                                              itemBuilder: (context, index) {
-                                                return restaurantCard(
-                                                    context,
-                                                    categoriesList[index],
-                                                    lastItem);
-                                              }))),
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: categoriesList.length,
+                                          itemBuilder: (context, index) {
+                                            return RestaurantCard(
+                                                category: categoriesList[index],
+                                                last: lastItem,
+                                                itemsList: itemsList);
+                                          })),
                                 ),
                                 Flexible(
                                   child: homeTextCard(
