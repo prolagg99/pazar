@@ -25,26 +25,22 @@ class _HomeState extends State<Home> {
   final TextEditingController _textEditingController = TextEditingController();
   static var formKey = GlobalKey<FormState>();
 
-  List<Categories> mCategories = [];
   List<Item> dishesListOnSearch = [];
   List<Slides> mSlides = [];
   late Categories lastItem;
-  GetCategories categoris = GetCategories();
 
   @override
   void initState() {
     super.initState();
-    mCategories = getRestaurantImages();
-    lastItem = mCategories[mCategories.length - 1];
     mSlides = getSlides();
 
-    categoris.getCategories();
+    print('length ${itemsList.length}');
+    print('length ${categoriesList.length}');
+    lastItem = categoriesList[categoriesList.length - 1];
   }
 
   @override
   Widget build(BuildContext context) {
-    var catalog = context.watch<CatalogModel>();
-
     return Scaffold(
       backgroundColor: colorPrimary,
       resizeToAvoidBottomInset: false,
@@ -91,7 +87,7 @@ class _HomeState extends State<Home> {
                                 controller: _textEditingController,
                                 onChanged: (value) {
                                   setState(() {
-                                    dishesListOnSearch = catalog.catalogItems
+                                    dishesListOnSearch = itemsList
                                         .where((element) => element.name
                                             .toLowerCase()
                                             .contains(value.toLowerCase()))
@@ -177,18 +173,22 @@ class _HomeState extends State<Home> {
                                           MediaQuery.of(context).size.height *
                                               0.20,
                                       child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(context,
-                                              MaterialPageRoute(
-                                                  builder: (context) {
-                                            return const RestaurantItems();
-                                          }));
-                                          print(
-                                              categoris.categoriesList.length);
-                                        },
-                                        child: restaurantListView(
-                                            categoris.categoriesList, lastItem),
-                                      )),
+                                          onTap: () {
+                                            Navigator.push(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const RestaurantItems();
+                                            }));
+                                          },
+                                          child: ListView.builder(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: categoriesList.length,
+                                              itemBuilder: (context, index) {
+                                                return restaurantCard(
+                                                    context,
+                                                    categoriesList[index],
+                                                    lastItem);
+                                              }))),
                                 ),
                                 Flexible(
                                   child: homeTextCard(
@@ -200,17 +200,16 @@ class _HomeState extends State<Home> {
                                 ),
                                 Flexible(
                                   child: SizedBox(
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          padding: const EdgeInsets.all(0.0),
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              catalog.catalogItems.length,
-                                          itemBuilder: (context, index) {
-                                            return ItemCard(
-                                                catalog.catalogItems[index]);
-                                          })),
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        padding: const EdgeInsets.all(0.0),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: itemsList.length,
+                                        itemBuilder: (context, index) {
+                                          return ItemCard(itemsList[index]);
+                                        }),
+                                  ),
                                 )
                               ],
                             ),
@@ -224,25 +223,63 @@ class _HomeState extends State<Home> {
   }
 }
 
-// final CollectionReference categoriesCollection =
-//     FirebaseFirestore.instance.collection('categories');
-// List<Categories> categoriesList = [];
+List<Categories> categoriesList = [];
+List<Item> itemsList = [];
 
-// // fetsh data from db to search elements and display it
-// Future<void> getCategories() async {
-//   categoriesCollection.get().then((value) {
-//     return value.docs.forEach((doc) {
-//       print('getDocuments ${doc.data()}');
-//       categoriesList.add(
-//         Categories(
-//           image:
-//               doc.data().toString().contains('image') ? doc.get('image') : '',
-//           name: doc.data().toString().contains('name') ? doc.get('name') : '',
-//           nameArab: doc.data().toString().contains('nameArab')
-//               ? doc.get('nameArab')
-//               : '',
-//         ),
-//       );
-//     });
-//   });
-// }
+class GetItemsClass {
+  final CollectionReference categoriesCollection =
+      FirebaseFirestore.instance.collection('categories');
+
+  Future<void> getCategories() async {
+    await categoriesCollection.get().then((value) {
+      return value.docs.forEach((doc) {
+        print('getDocuments ${doc.data()}');
+        categoriesList.add(
+          Categories(
+            image:
+                doc.data().toString().contains('image') ? doc.get('image') : '',
+            name: doc.data().toString().contains('name') ? doc.get('name') : '',
+            nameArab: doc.data().toString().contains('nameArab')
+                ? doc.get('nameArab')
+                : '',
+          ),
+        );
+      });
+    });
+  }
+
+  final CollectionReference itemsCollection =
+      FirebaseFirestore.instance.collection('items');
+
+  Future<void> getItems() async {
+    await itemsCollection.get().then((value) {
+      return value.docs.forEach((doc) {
+        print('getDocuments ${doc.data()}');
+        itemsList.add(
+          Item(
+            category: doc.data().toString().contains('category')
+                ? doc.get('category')
+                : '',
+            categoryArab: doc.data().toString().contains('categoryArab')
+                ? doc.get('categoryArab')
+                : '',
+            image:
+                doc.data().toString().contains('image') ? doc.get('image') : '',
+            name: doc.data().toString().contains('name') ? doc.get('name') : '',
+            nameArab: doc.data().toString().contains('name_arab')
+                ? doc.get('name_arab')
+                : '',
+            qnt: doc.data().toString().contains('qnt') ? doc.get('qnt') : '',
+            // the price double ;
+            price: doc.data().toString().contains('price')
+                ? doc.get('price').toDouble()
+                : 0.0,
+            totalPrice: doc.data().toString().contains('total_price')
+                ? doc.get('total_price').toDouble()
+                : 0.0,
+          ),
+        );
+      });
+    });
+  }
+}

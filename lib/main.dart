@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pazar/localization/demo_localization.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
+import 'package:pazar/screen/loading.dart';
 import 'package:provider/provider.dart';
 import 'localization/language_constants.dart';
 import 'package:pazar/screen/bottom_navigation.dart';
@@ -85,10 +86,8 @@ class _PazarState extends State<Pazar> {
           }
           return supportedLocales.first;
         },
-        // onGenerateRoute: CustomRouter.generatedRoute,
-        // initialRoute: homeRoute,
         routes: <String, WidgetBuilder>{
-          '/': (context) => const BottomNavigation(),
+          '/': (context) => const Loading(),
           Home.tag: (context) => const Home(),
           RestaurantItems.tag: (context) => const RestaurantItems(),
           ItemCart.tag: (context) => const ItemCart(),

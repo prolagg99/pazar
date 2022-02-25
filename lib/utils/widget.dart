@@ -1,5 +1,7 @@
 // ignore_for_file: use_key_in_widget_constructors, avoid_print
 
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -183,14 +185,14 @@ Widget homeTextCard(context, title, subtitle) {
   );
 }
 
-ListView restaurantListView(mRestaurants, lastItem) {
-  return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: mRestaurants.length,
-      itemBuilder: (context, index) {
-        return restaurantCard(context, mRestaurants[index], lastItem);
-      });
-}
+// ListView restaurantListView(mRestaurants, lastItem) {
+//   return ListView.builder(
+//       scrollDirection: Axis.horizontal,
+//       itemCount: mRestaurants.length,
+//       itemBuilder: (context, index) {
+//         return restaurantCard(context, mRestaurants[index], lastItem);
+//       });
+// }
 
 ListView itemListView(mDishes) {
   return ListView.builder(
@@ -236,7 +238,6 @@ class _ItemCardState extends State<ItemCard> {
       // Here, we are only interested whether [item] is inside the cart.
       (cart) => cart.items.contains(widget.model),
     );
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: GestureDetector(
@@ -247,7 +248,7 @@ class _ItemCardState extends State<ItemCard> {
                   builder: (context) => ItemDetails(widget.model)));
         },
         child: Container(
-            height: 94,
+            height: 95,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(8),
@@ -266,7 +267,7 @@ class _ItemCardState extends State<ItemCard> {
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10)),
                               image: DecorationImage(
-                                image: AssetImage(widget.model.image),
+                                image: NetworkImage(widget.model.image),
                                 fit: BoxFit.fill,
                               )),
                         ),

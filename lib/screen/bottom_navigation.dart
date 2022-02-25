@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
+  static String tag = '/BottomNavigation';
 
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
