@@ -24,7 +24,7 @@ class CategoryItems extends StatefulWidget {
 class _CategoryItemsState extends State<CategoryItems> {
   @override
   Widget build(BuildContext context) {
-    var categoryItems = widget.categoryItems;
+    List<Item> categoryItems = widget.categoryItems;
     Item firstItem = categoryItems[0];
 
     changeStatusColor(colorAccentGreen);

@@ -9,7 +9,6 @@ import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/screen/category_items.dart';
-import 'package:pazar/screen/home.dart';
 import 'package:pazar/screen/item_details.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
@@ -224,7 +223,7 @@ class _RestaurantCardState extends State<RestaurantCard> {
   List<Item> categoryItems = [];
 
   void getCategoryItems() {
-    for (var element in itemsList) {
+    for (var element in widget.itemsList) {
       if (element.category == widget.category.name) {
         categoryItems.add(element);
       }

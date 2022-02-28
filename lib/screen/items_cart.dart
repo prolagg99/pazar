@@ -242,7 +242,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
-                                  image: AssetImage(widget.item.image),
+                                  image: NetworkImage(widget.item.image),
                                   fit: BoxFit.fill,
                                 )),
                           ),

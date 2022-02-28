@@ -4,7 +4,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pazar/localization/demo_localization.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
-import 'package:pazar/screen/loading.dart';
+import 'package:pazar/model/model.dart';
+import 'package:pazar/services/database.dart';
 import 'package:provider/provider.dart';
 import 'localization/language_constants.dart';
 import 'package:pazar/screen/bottom_navigation.dart';
@@ -20,6 +21,14 @@ void main() async {
       Provider(create: (context) => CatalogModel()),
       ChangeNotifierProvider(
         create: (context) => CartModel(),
+      ),
+      StreamProvider<List<Categories>>.value(
+        initialData: const [],
+        value: DataBaseService().categories,
+      ),
+      StreamProvider<List<Item>>.value(
+        initialData: const [],
+        value: DataBaseService().items,
       ),
     ],
     child: const Pazar(),
@@ -86,7 +95,7 @@ class _PazarState extends State<Pazar> {
           return supportedLocales.first;
         },
         routes: <String, WidgetBuilder>{
-          '/': (context) => const Loading(),
+          '/': (context) => const BottomNavigation(),
           Home.tag: (context) => const Home(),
           BottomNavigation.tag: (context) => const BottomNavigation(),
           ItemCart.tag: (context) => const ItemCart(),

@@ -9,18 +9,9 @@ List<Slides> getSlides() {
   return data;
 }
 
-List<Categories> getRestaurantImages() {
-  List<Categories> data = [];
-  data.add(Categories(image: img_chami));
-  data.add(Categories(image: img_chatain));
-  data.add(Categories(image: img_kababji));
-  return data;
-}
-
 class CatalogModel {
   final List<Item> _catalogItems = [
     Item(
-        // id: 1,
         category: 'kababji',
         categoryArab: 'كبابجي',
         image: img_tacos,
@@ -30,7 +21,6 @@ class CatalogModel {
         price: 450.00,
         totalPrice: 450.00),
     Item(
-        // id: 2,
         category: 'kababji',
         categoryArab: 'كبابجي',
         image: img_pizza,
@@ -40,7 +30,6 @@ class CatalogModel {
         price: 300.00,
         totalPrice: 300.00),
     Item(
-        // id: 3,
         category: 'kababji',
         categoryArab: 'كبابجي',
         image: img_burger,
@@ -54,7 +43,6 @@ class CatalogModel {
 }
 
 class Item {
-  // final int id;
   String category;
   String categoryArab;
   String image;
@@ -64,14 +52,12 @@ class Item {
   int qnt;
   double totalPrice;
   Item({
-    // required this.id,
     required this.category,
     required this.categoryArab,
     required this.image,
     required this.name,
     required this.nameArab,
     required this.price,
-    // required this.qnt = 1, try this later
     required this.qnt,
     this.totalPrice = 0.0,
   });
