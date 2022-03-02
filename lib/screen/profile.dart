@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pazar/classes/language.dart';
 import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/main.dart';
+import 'package:pazar/services/auth.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/extension.dart';
@@ -17,6 +18,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  final AuthService _auth = AuthService();
   int pnts = 0;
   @override
   Widget build(BuildContext context) {
@@ -236,7 +238,9 @@ class _ProfileState extends State<Profile> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0)),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _auth.signOut();
+                    },
                     child: text(getTranslated(context, 'logout'),
                         fontFamily: fontBold,
                         fontSize: textSizeSMedium,

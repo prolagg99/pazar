@@ -9,39 +9,6 @@ List<Slides> getSlides() {
   return data;
 }
 
-class CatalogModel {
-  final List<Item> _catalogItems = [
-    Item(
-        category: 'kababji',
-        categoryArab: 'كبابجي',
-        image: img_tacos,
-        name: 'tacos poulet L',
-        nameArab: 'L طاكوس دجاج',
-        qnt: 1,
-        price: 450.00,
-        totalPrice: 450.00),
-    Item(
-        category: 'kababji',
-        categoryArab: 'كبابجي',
-        image: img_pizza,
-        name: 'pizza simple L',
-        nameArab: 'L بيتزا عادية',
-        qnt: 1,
-        price: 300.00,
-        totalPrice: 300.00),
-    Item(
-        category: 'kababji',
-        categoryArab: 'كبابجي',
-        image: img_burger,
-        name: 'burger',
-        nameArab: 'تشيز برقر',
-        qnt: 1,
-        price: 300.00,
-        totalPrice: 300.00),
-  ];
-  List<Item> get catalogItems => _catalogItems;
-}
-
 class Item {
   String category;
   String categoryArab;

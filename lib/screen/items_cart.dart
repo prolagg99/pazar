@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, avoid_print, import_of_legacy_library_into_null_safe, deprecated_member_use, unrelated_type_equality_checks
+// ignore_for_file: must_be_immutable, avoid_print, import_of_legacy_library_into_null_safe, deprecated_member_use, unrelated_type_equality_checks, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -208,10 +208,10 @@ class _CartItemsCardState extends State<CartItemsCard> {
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Slidable(
         key: UniqueKey(),
-        actionPane: const SlidableDrawerActionPane(),
+        actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.33,
         dismissal: SlidableDismissal(
-          child: const SlidableDrawerDismissal(),
+          child: SlidableDrawerDismissal(),
           onDismissed: (actionType) {
             // maybe this cause a problem in the future
             cartModel.updateItemQnt(widget.index, 1, widget.item.price);
@@ -242,7 +242,7 @@ class _CartItemsCardState extends State<CartItemsCard> {
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(10)),
                                 image: DecorationImage(
-                                  image: NetworkImage(widget.item.image),
+                                  image: AssetImage(widget.item.image),
                                   fit: BoxFit.fill,
                                 )),
                           ),

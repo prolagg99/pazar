@@ -5,6 +5,10 @@ import 'package:pazar/localization/demo_localization.dart';
 import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/model/model.dart';
+import 'package:pazar/model/user.dart';
+import 'package:pazar/screen/authenticate/register.dart';
+import 'package:pazar/screen/wrapper.dart';
+import 'package:pazar/services/auth.dart';
 import 'package:pazar/services/database.dart';
 import 'package:provider/provider.dart';
 import 'localization/language_constants.dart';
@@ -18,7 +22,7 @@ void main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
-      Provider(create: (context) => CatalogModel()),
+      // Provider(create: (context) => CatalogModel()),
       ChangeNotifierProvider(
         create: (context) => CartModel(),
       ),
@@ -29,6 +33,10 @@ void main() async {
       StreamProvider<List<Item>>.value(
         initialData: const [],
         value: DataBaseService().items,
+      ),
+      StreamProvider<UserModel?>.value(
+        initialData: null,
+        value: AuthService().user,
       ),
     ],
     child: const Pazar(),
@@ -95,7 +103,7 @@ class _PazarState extends State<Pazar> {
           return supportedLocales.first;
         },
         routes: <String, WidgetBuilder>{
-          '/': (context) => const BottomNavigation(),
+          '/': (context) => const Wrapper(),
           Home.tag: (context) => const Home(),
           BottomNavigation.tag: (context) => const BottomNavigation(),
           ItemCart.tag: (context) => const ItemCart(),
