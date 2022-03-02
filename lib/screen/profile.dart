@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pazar/classes/language.dart';
 import 'package:pazar/localization/language_constants.dart';
 import 'package:pazar/main.dart';
+import 'package:pazar/model/user.dart';
 import 'package:pazar/services/auth.dart';
 import 'package:pazar/utils/colors.dart';
 import 'package:pazar/utils/constant.dart';
 import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/widget.dart';
 import 'package:pazar/utils/images.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -22,6 +24,8 @@ class _ProfileState extends State<Profile> {
   int pnts = 0;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserModel>(context);
+
     changeStatusColor(colorAccentGreen);
     return Scaffold(
       backgroundColor: colorPrimary,
@@ -60,7 +64,7 @@ class _ProfileState extends State<Profile> {
                           text('ILii Ne',
                               fontFamily: fontBold, fontSize: textSizeSMedium),
                           text(
-                            'pro.lagg99@gmail.com',
+                            user.email,
                             fontFamily: fontLight,
                             fontSize: textSizeSmall,
                           ),
