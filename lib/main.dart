@@ -6,7 +6,6 @@ import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/model/user.dart';
-import 'package:pazar/screen/authenticate/register.dart';
 import 'package:pazar/screen/wrapper.dart';
 import 'package:pazar/services/auth.dart';
 import 'package:pazar/services/database.dart';
