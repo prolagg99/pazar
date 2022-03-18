@@ -10,16 +10,16 @@ import 'package:pazar/utils/extension.dart';
 import 'package:pazar/utils/images.dart';
 import 'package:pazar/utils/widget.dart';
 
-class SignIn extends StatefulWidget {
+class RegisterWithEmail extends StatefulWidget {
   final Function toggleView;
-
-  const SignIn({Key? key, required this.toggleView}) : super(key: key);
+  const RegisterWithEmail({Key? key, required this.toggleView})
+      : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterWithEmailState createState() => _RegisterWithEmailState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterWithEmailState extends State<RegisterWithEmail> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   String error = '';
@@ -62,18 +62,18 @@ class _SignInState extends State<SignIn> {
                                   isCentered: true,
                                   fontSize: 32.0,
                                 ),
-                                // Container(
-                                //   padding:
-                                //       const EdgeInsets.symmetric(horizontal: 70.0),
-                                //   child: text(
-                                //     'before enjoying Pazar services Please register first',
-                                //     isLongText: true,
-                                //     isCentered: true,
-                                //     fontFamily: fontLight,
-                                //     fontSize: textSizeSMedium,
-                                //     textColor: Colors.grey[600],
-                                //   ),
-                                // ),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 70.0),
+                                  child: text(
+                                    'before enjoying our services Please register first',
+                                    isLongText: true,
+                                    isCentered: true,
+                                    fontFamily: fontLight,
+                                    fontSize: textSizeSMedium,
+                                    textColor: Colors.grey[600],
+                                  ),
+                                ),
                               ],
                             )),
                         Form(
@@ -162,20 +162,19 @@ class _SignInState extends State<SignIn> {
                                         if (_formKey.currentState!.validate()) {
                                           setState(() => loading = true);
                                           dynamic result = await _auth
-                                              .signInWithEmailAndPassword(
+                                              .registerWithEmailAndPassword(
                                                   email, password);
                                           if (result == null) {
                                             setState(() {
                                               loading = false;
-
                                               error =
-                                                  'Could not sign in with those credentials';
+                                                  'Please supply a valid email';
                                             });
                                           }
                                         }
                                       },
                                       child: text(
-                                        'sign in',
+                                        'register',
                                         fontFamily: fontBold,
                                         fontSize: textSizeSMedium,
                                         textColor: Colors.white,
@@ -197,37 +196,39 @@ class _SignInState extends State<SignIn> {
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Column(
                             children: [
-                              // Container(
-                              //   height: 68,
-                              //   padding: const EdgeInsets.symmetric(horizontal: 60.0),
-                              //   // width: 180,
-                              //   width: MediaQuery.of(context).size.width,
-                              //   child: ElevatedButton(
-                              //       style: ElevatedButton.styleFrom(
-                              //         minimumSize: Size.zero,
-                              //         padding: EdgeInsets.zero,
-                              //         primary: colorAccentLightGreen,
-                              //         elevation: 0.0,
-                              //         shape: RoundedRectangleBorder(
-                              //             borderRadius: BorderRadius.circular(10.0)),
-                              //       ),
-                              //       onPressed: () {
-                              //         _auth.signOut();
-                              //       },
-                              //       child: text(
-                              //         'are you delivery ?',
-                              //         fontFamily: fontBold,
-                              //         // fontSize: textSizeMedium,
-                              //         textColor: colorAccentGreen,
-                              //       )),
-                              // ),
+                              Container(
+                                height: 68,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 60.0),
+                                // width: 180,
+                                width: MediaQuery.of(context).size.width,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      minimumSize: Size.zero,
+                                      padding: EdgeInsets.zero,
+                                      primary: colorAccentLightGreen,
+                                      elevation: 0.0,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                    ),
+                                    onPressed: () {
+                                      _auth.signOut();
+                                    },
+                                    child: text(
+                                      'are you delivery ?',
+                                      fontFamily: fontBold,
+                                      // fontSize: textSizeMedium,
+                                      textColor: colorAccentGreen,
+                                    )),
+                              ),
                               const SizedBox(height: 12.0),
                               Container(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 40.0),
                                   child: RichText(
                                     text: TextSpan(
-                                      text: "you don't have account ? ",
+                                      text: 'you have already registered ? ',
                                       style: const TextStyle(
                                         fontFamily: fontLight,
                                         fontSize: textSizeSMedium,
@@ -236,7 +237,7 @@ class _SignInState extends State<SignIn> {
                                       ),
                                       children: <TextSpan>[
                                         TextSpan(
-                                            text: 'register',
+                                            text: 'Sign in',
                                             style: const TextStyle(
                                               fontFamily: fontMeduim,
                                               fontSize: textSizeSMedium,

@@ -6,6 +6,7 @@ import 'package:pazar/model/cart.dart';
 import 'package:pazar/model/catalog.dart';
 import 'package:pazar/model/model.dart';
 import 'package:pazar/model/user.dart';
+import 'package:pazar/screen/launcher.dart';
 import 'package:pazar/screen/wrapper.dart';
 import 'package:pazar/services/auth.dart';
 import 'package:pazar/services/database.dart';
@@ -102,7 +103,8 @@ class _PazarState extends State<Pazar> {
           return supportedLocales.first;
         },
         routes: <String, WidgetBuilder>{
-          '/': (context) => const Wrapper(),
+          '/': (context) => const Launcher(),
+          Wrapper.tag: (context) => const Wrapper(),
           Home.tag: (context) => const Home(),
           BottomNavigation.tag: (context) => const BottomNavigation(),
           ItemCart.tag: (context) => const ItemCart(),

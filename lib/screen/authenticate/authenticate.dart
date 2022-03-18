@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pazar/screen/authenticate/register.dart';
+import 'package:pazar/screen/authenticate/register_with_email.dart';
 import 'package:pazar/screen/authenticate/sign_in.dart';
 
 class Authenticate extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AuthenticateState extends State<Authenticate> {
     if (showSignIn) {
       return SignIn(toggleView: toggleView);
     } else {
-      return Register(toggleView: toggleView);
+      return RegisterWithEmail(toggleView: toggleView);
     }
   }
 }

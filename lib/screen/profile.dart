@@ -61,7 +61,7 @@ class _ProfileState extends State<Profile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          text('ILii Ne',
+                          text('User',
                               fontFamily: fontBold, fontSize: textSizeSMedium),
                           text(
                             user.email,

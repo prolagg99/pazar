@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
   const Wrapper({Key? key}) : super(key: key);
+  static String tag = "/Wrapper";
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +18,6 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const Authenticate();
     } else {
-      print('heeeeeeeeeeeeeeeeeeeeeere ${user.email}');
-
       return const BottomNavigation();
     }
   }

@@ -118,8 +118,8 @@ Widget appBarTitle() {
         Expanded(
           child: Align(
               alignment: Alignment.center,
-              child: text('ILii Ne',
-                  fontFamily: fontBold, fontSize: textSizeSmall)),
+              child:
+                  text('user', fontFamily: fontBold, fontSize: textSizeSmall)),
         ),
         const Expanded(
           child: SizedBox(
@@ -278,9 +278,11 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     var isInCart = context.select<CartModel, bool>(
-      // Here, we are only interested whether [item] is inside the cart.
+      // Here, we are only interested whether [item]
+      // is inside the cart.
       (cart) => cart.items.contains(widget.model),
     );
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
       child: GestureDetector(

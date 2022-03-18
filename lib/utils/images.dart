@@ -11,6 +11,7 @@ const ic_alert_circle = "images/ic_alert_circle.svg";
 const ic_alert_triangle = "images/ic_alert_triangle.svg";
 const ic_flag_us = "images/flag_us.svg";
 const ic_flag_fr = "images/flag_fr.svg";
+const ic_launcher = "images/launcher.png";
 
 // slides images
 const img_slide1 = "images/slide1.jpg";
@@ -19,3 +20,4 @@ const img_slide3 = "images/slide3.jpg";
 
 // register & login screens img
 const img_register = "images/img_register.jpg";
+const img_auth = "images/hamburger_auth_screen.svg";
